@@ -1,0 +1,21 @@
+@import '../../../../shared/design-tokens.css';
+
+@layer reset, base, components, utilities;
+
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box; }
+  * { margin: 0; }
+  html, body { height: 100%; }
+  body { line-height: var(--leading-normal); -webkit-font-smoothing: antialiased; }
+  img, picture, video, canvas, svg { display: block; max-width: 100%; }
+  input, button, textarea, select { font: inherit; color: inherit; }
+  button { cursor: pointer; background: none; border: none; padding: 0; }
+  p, h1, h2, h3, h4, h5, h6 { overflow-wrap: break-word; }
+  :focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; border-radius: var(--radius-sm); }
+}
+
+@layer base {
+  body { font-family: var(--font-sans); font-size: var(--text-base); color: var(--color-fg); background: var(--color-bg); }
+  ::selection { background: var(--color-accent); color: var(--color-accent-fg); }
+  a { color: var(--color-accent); text-decoration: none; }
+}
