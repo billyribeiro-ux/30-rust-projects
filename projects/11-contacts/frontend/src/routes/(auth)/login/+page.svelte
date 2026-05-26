@@ -87,4 +87,5 @@
     text-align: center;
     line-height: var(--leading-relaxed);
   }
+  .alt a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 2px; }
 </style>

@@ -52,5 +52,6 @@
     border-radius: var(--radius-md);
     font-size: var(--text-sm);
   }
+  .alt a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 2px; }
   .alt { margin-top: var(--space-5); color: var(--color-fg-muted); font-size: var(--text-sm); text-align: center; }
 </style>

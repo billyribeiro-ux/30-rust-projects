@@ -165,7 +165,7 @@ test.describe('auth + permission matrix', () => {
     await page.waitForLoadState('networkidle');
 
     // Add via UI
-    await page.getByRole('link', { name: /contacts/i }).first().click();
+    await page.locator('a[href="/contacts"]').first().click();
     await page.waitForLoadState('networkidle');
     await page.getByRole('link', { name: /add contact/i }).click();
     await page.waitForLoadState('networkidle');
