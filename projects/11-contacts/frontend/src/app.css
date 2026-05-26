@@ -17,5 +17,9 @@
 @layer base {
   body { font-family: var(--font-sans); font-size: var(--text-base); color: var(--color-fg); background: var(--color-bg); }
   ::selection { background: var(--color-accent); color: var(--color-accent-fg); }
-  a { color: var(--color-accent); text-decoration: none; }
+  /* Links are underlined by default so they pass WCAG 2.4.1 (link-in-text-block)
+     even when their hue contrast vs surrounding muted text fails. Nav, brand,
+     and button-like links opt out via scoped rules. */
+  a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 2px; }
+  nav a, .brand, [role='tab'], .primary, .ghost, .danger, .back, .skip-link { text-decoration: none; }
 }

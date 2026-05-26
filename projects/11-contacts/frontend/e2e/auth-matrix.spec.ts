@@ -179,7 +179,7 @@ test.describe('auth + permission matrix', () => {
 
     // Now on detail page
     await expect(page.getByRole('heading', { level: 1, name })).toBeVisible();
-    await expect(page.getByText('Acme')).toBeVisible();
+    await expect(page.getByText('Acme').first()).toBeVisible();
 
     // Touch the contact → last_contacted_at populated; refresh shows it
     await page.getByRole('button', { name: /mark as contacted now/i }).click();
