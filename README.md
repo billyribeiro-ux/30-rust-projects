@@ -75,7 +75,7 @@ Tier 1 — SQLite foundations:
 
 Tier 2 — Postgres + Auth (11–18):
 
-- [ ] 11 — Contact Manager + Dashboard (**first Postgres, first auth: Argon2id + sessions**)
+- [x] **11 — Contact Manager + Dashboard** — first Postgres + Docker Compose + MailHog; Argon2id + server-side hashed sessions + sliding expiry + HttpOnly+SameSite=Lax+Secure cookies; single-use email-verify + password-reset tokens with atomic consume; tsvector FTS with weighted GIN index; `hooks.server.ts` auth handle; cross-origin cookie forwarding; `(auth)`/`(app)` route-group guards; Playwright permission-matrix tests proving server-side per-user scoping.
 - [ ] 12 — Job Application Tracker (+ bcrypt legacy-migration lesson)
 - [ ] 13 — Real-time Chat Rooms (+ first JWT)
 - [ ] 14 — Calendar & Scheduler
