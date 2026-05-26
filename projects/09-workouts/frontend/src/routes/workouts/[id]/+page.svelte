@@ -36,21 +36,15 @@
     <h1>{workout.name || 'Workout'}</h1>
     <p class="lead">{formatDate(workout.performed_at)}</p>
     <dl class="meta">
-      <div>
-        <dt>Sets</dt>
-        <dd>{workout.sets.length}</dd>
-      </div>
-      <div>
-        <dt>Volume</dt>
-        <dd>{formatVolume(totalVolume)}</dd>
-      </div>
-      <div>
-        <dt>PRs</dt>
-        <dd>
-          <Icon icon={Trophy} size={14} weight="duotone" />
-          {prCount}
-        </dd>
-      </div>
+      <dt>Sets</dt>
+      <dd>{workout.sets.length}</dd>
+      <dt>Volume</dt>
+      <dd>{formatVolume(totalVolume)}</dd>
+      <dt>PRs</dt>
+      <dd>
+        <Icon icon={Trophy} size={14} weight="duotone" />
+        {prCount}
+      </dd>
     </dl>
   </header>
 
@@ -120,18 +114,21 @@
   .meta {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-2);
+    grid-template-rows: auto auto;
+    gap: 2px var(--space-2);
     padding: var(--space-3);
     background: var(--color-bg-elev);
     border-radius: var(--radius-md);
   }
   .meta dt {
+    grid-row: 1;
     color: var(--color-fg-muted);
     font-size: var(--text-xs);
     text-transform: uppercase;
     letter-spacing: 0.04em;
   }
   .meta dd {
+    grid-row: 2;
     font-size: var(--text-lg);
     font-weight: 700;
     display: inline-flex;
@@ -139,6 +136,9 @@
     gap: 4px;
     font-variant-numeric: tabular-nums;
   }
+  .meta dt:nth-of-type(1), .meta dd:nth-of-type(1) { grid-column: 1; }
+  .meta dt:nth-of-type(2), .meta dd:nth-of-type(2) { grid-column: 2; }
+  .meta dt:nth-of-type(3), .meta dd:nth-of-type(3) { grid-column: 3; }
 
   .panel {
     background: var(--color-bg-elev);
