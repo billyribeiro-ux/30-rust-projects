@@ -133,9 +133,9 @@ export const contactsApi = {
 };
 
 export const dashboardApi = {
-  get: (f: FetchLike) => request<DashboardData>(f, '/api/dashboard/')
+  get: (f: FetchLike) => request<DashboardData>(f, '/api/dashboard')
 };
 
 export const tagsApi = {
-  list: (f: FetchLike) => request<TagWithCount[]>(f, '/api/tags/')
+  list: (f: FetchLike) => request<TagWithCount[]>(f, '/api/tags')
 };

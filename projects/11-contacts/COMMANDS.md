@@ -61,7 +61,7 @@ curl -s -b "contacts_session=$SESSION" -X POST http://localhost:3010/api/contact
 curl -s -b "contacts_session=$SESSION" "http://localhost:3010/api/contacts?q=acme"
 
 # Dashboard
-curl -s -b "contacts_session=$SESSION" http://localhost:3010/api/dashboard/
+curl -s -b "contacts_session=$SESSION" http://localhost:3010/api/dashboard
 
 # No cookie = 401
 curl -s -i http://localhost:3010/api/contacts | head -1

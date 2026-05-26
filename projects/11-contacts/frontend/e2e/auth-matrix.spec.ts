@@ -48,7 +48,7 @@ test.describe('auth + permission matrix', () => {
   test('register form lands on dashboard with the cookie set', async ({ page }) => {
     await gotoHydrated(page, '/register');
     const email = `${uniq('e2e')}@example.com`;
-    await page.getByLabel(/^email$/i).fill(email);
+    await page.getByLabel(/^email/i).fill(email);
     await page.getByLabel(/^password/i).fill('correct horse battery staple');
     await page.getByRole('button', { name: /create account/i }).click();
     await page.waitForLoadState('networkidle');
@@ -63,7 +63,7 @@ test.describe('auth + permission matrix', () => {
     const loginAxe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
     expect(loginAxe.violations, JSON.stringify(loginAxe.violations, null, 2)).toEqual([]);
 
-    await page.getByLabel(/^email$/i).fill(email);
+    await page.getByLabel(/^email/i).fill(email);
     await page.getByLabel(/^password/i).fill(password);
     await page.getByRole('button', { name: /sign in/i }).click();
     await page.waitForLoadState('networkidle');
@@ -76,7 +76,7 @@ test.describe('auth + permission matrix', () => {
   test('wrong password returns generic 401 error', async ({ page, request }) => {
     const { email } = await apiRegister(request);
     await gotoHydrated(page, '/login');
-    await page.getByLabel(/^email$/i).fill(email);
+    await page.getByLabel(/^email/i).fill(email);
     await page.getByLabel(/^password/i).fill('definitely the wrong password');
     await page.getByRole('button', { name: /sign in/i }).click();
     await page.waitForLoadState('networkidle');
@@ -124,8 +124,8 @@ test.describe('auth + permission matrix', () => {
       ['GET', '/api/auth/me'],
       ['GET', '/api/contacts'],
       ['POST', '/api/contacts'],
-      ['GET', '/api/dashboard/'],
-      ['GET', '/api/tags/'],
+      ['GET', '/api/dashboard'],
+      ['GET', '/api/tags'],
       ['POST', '/api/auth/logout']
     ];
     for (const [method, path] of endpoints) {
@@ -140,7 +140,7 @@ test.describe('auth + permission matrix', () => {
   test('logout clears the cookie and bounces back to /login', async ({ page, request }) => {
     const { email, password } = await apiRegister(request);
     await gotoHydrated(page, '/login');
-    await page.getByLabel(/^email$/i).fill(email);
+    await page.getByLabel(/^email/i).fill(email);
     await page.getByLabel(/^password/i).fill(password);
     await page.getByRole('button', { name: /sign in/i }).click();
     await page.waitForLoadState('networkidle');
@@ -159,7 +159,7 @@ test.describe('auth + permission matrix', () => {
   test('contacts CRUD round-trip via the UI', async ({ page, request }) => {
     const { email, password } = await apiRegister(request);
     await gotoHydrated(page, '/login');
-    await page.getByLabel(/^email$/i).fill(email);
+    await page.getByLabel(/^email/i).fill(email);
     await page.getByLabel(/^password/i).fill(password);
     await page.getByRole('button', { name: /sign in/i }).click();
     await page.waitForLoadState('networkidle');
@@ -171,8 +171,8 @@ test.describe('auth + permission matrix', () => {
     await page.waitForLoadState('networkidle');
     const name = `Contact ${uniq()}`;
     await page.getByLabel(/^name/i).fill(name);
-    await page.getByLabel(/^company$/i).fill('Acme');
-    await page.getByLabel(/^email$/i).fill('person@acme.com');
+    await page.getByLabel(/^company/i).fill('Acme');
+    await page.getByLabel(/^email/i).fill('person@acme.com');
     await page.getByLabel(/^tags/i).fill('work important');
     await page.getByRole('button', { name: /save contact/i }).click();
     await page.waitForLoadState('networkidle');
