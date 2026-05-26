@@ -52,24 +52,16 @@
     <p class="lead">Track sets. Spot PRs. Confirm you're getting stronger.</p>
   </header>
 
-  <section class="stats" aria-label="Stats">
-    <div>
-      <dt>Workouts (7d)</dt>
-      <dd data-testid="stat-last7">{data.stats.workouts_last_7_days}</dd>
-    </div>
-    <div>
-      <dt>Total volume</dt>
-      <dd data-testid="stat-volume">{formatVolume(totalVolume)}</dd>
-    </div>
-    <div>
-      <dt>Total PRs</dt>
-      <dd data-testid="stat-prs">{data.stats.pr_count_total}</dd>
-    </div>
-    <div>
-      <dt>Avg sets / workout</dt>
-      <dd data-testid="stat-avg">{averageSetsPerWorkout}</dd>
-    </div>
-  </section>
+  <dl class="stats" aria-label="Stats">
+    <dt>Workouts (7d)</dt>
+    <dd data-testid="stat-last7">{data.stats.workouts_last_7_days}</dd>
+    <dt>Total volume</dt>
+    <dd data-testid="stat-volume">{formatVolume(totalVolume)}</dd>
+    <dt>Total PRs</dt>
+    <dd data-testid="stat-prs">{data.stats.pr_count_total}</dd>
+    <dt>Avg sets / workout</dt>
+    <dd data-testid="stat-avg">{averageSetsPerWorkout}</dd>
+  </dl>
 
   <section class="panel" aria-label="This week">
     <h2>This week</h2>
