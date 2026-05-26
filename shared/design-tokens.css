@@ -1,0 +1,120 @@
+/* shared/design-tokens.css
+ * Design tokens reused across all 30 projects.
+ * Imported via @import in each project's app.css.
+ * Mobile-first; breakpoints used in media queries.
+ */
+
+:root {
+  /* Color — neutral foundation, projects override --accent per brand */
+  --color-bg: hsl(0 0% 100%);
+  --color-bg-elev: hsl(0 0% 98%);
+  --color-bg-sunken: hsl(220 14% 96%);
+  --color-fg: hsl(220 13% 13%);
+  --color-fg-muted: hsl(220 9% 46%);
+  --color-fg-subtle: hsl(220 9% 65%);
+  --color-border: hsl(220 13% 91%);
+  --color-border-strong: hsl(220 13% 82%);
+
+  --color-accent: hsl(231 84% 56%);
+  --color-accent-hover: hsl(231 84% 48%);
+  --color-accent-fg: hsl(0 0% 100%);
+
+  --color-success: hsl(142 71% 35%);
+  --color-warning: hsl(38 92% 45%);
+  --color-danger: hsl(0 72% 51%);
+
+  --color-focus: hsl(231 84% 56% / 0.35);
+
+  /* Type scale — modular, ratio 1.2 */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+
+  /* Spacing — 4px base */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Radii */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px hsl(220 13% 13% / 0.05);
+  --shadow-md: 0 4px 6px -1px hsl(220 13% 13% / 0.08),
+    0 2px 4px -2px hsl(220 13% 13% / 0.05);
+  --shadow-lg: 0 10px 15px -3px hsl(220 13% 13% / 0.1),
+    0 4px 6px -4px hsl(220 13% 13% / 0.05);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+
+  /* Layout */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+
+  /* Z-index scale */
+  --z-base: 1;
+  --z-sticky: 100;
+  --z-overlay: 1000;
+  --z-modal: 1100;
+  --z-toast: 1200;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: hsl(220 13% 10%);
+    --color-bg-elev: hsl(220 13% 13%);
+    --color-bg-sunken: hsl(220 13% 8%);
+    --color-fg: hsl(220 13% 95%);
+    --color-fg-muted: hsl(220 9% 65%);
+    --color-fg-subtle: hsl(220 9% 50%);
+    --color-border: hsl(220 13% 22%);
+    --color-border-strong: hsl(220 13% 32%);
+
+    --color-accent: hsl(231 84% 65%);
+    --color-accent-hover: hsl(231 84% 72%);
+
+    --shadow-sm: 0 1px 2px hsl(0 0% 0% / 0.4);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.5),
+      0 2px 4px -2px hsl(0 0% 0% / 0.4);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.6),
+      0 4px 6px -4px hsl(0 0% 0% / 0.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}
