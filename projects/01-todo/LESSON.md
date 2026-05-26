@@ -1147,7 +1147,8 @@ describe('todosApi', () => {
   it('encodes the id in the path', async () => {
     const fetcher = makeFetch({ status: 204, body: null });
     await todosApi.remove(fetcher, 'a/b c');
-    const url = fetcher.mock.calls[0]?.[0] as string;
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    const [url] = (fetcher.mock.calls as unknown as Array<[string, RequestInit]>)[0] ?? ['', {}];
     expect(url).toContain('/api/todos/a%2Fb%20c');
   });
 });
@@ -1159,7 +1160,10 @@ describe('todosApi', () => {
 - `new Response(body, { status, headers })` — we hand-craft fetch responses. No network involved.
 - `expect(...).resolves.toEqual(sample)` — async-aware assertion: "this promise resolves to this value".
 - `expect(...).rejects.toBeInstanceOf(...)` — same for thrown errors.
-- `fetcher.mock.calls[0]?.[0]` — the first argument of the first call (the URL). `?.` because `noUncheckedIndexedAccess` makes the array access `T | undefined`.
+- `expect(fetcher).toHaveBeenCalledTimes(1)` — proves the call happened before we destructure it. Without this, a buggy `remove` that never called fetch would silently make the next assertion vacuous.
+- `(fetcher.mock.calls as unknown as Array<[string, RequestInit]>)[0] ?? ['', {}]` — looks ugly, but it's the price of strictness. Two strict-TS rules collide here:
+  - `noUncheckedIndexedAccess` makes `arr[0]` return `T | undefined`, so we must handle "what if empty" with `?? ['', {}]`.
+  - Vitest's `MockInstance.calls` is typed as a tuple of generic `Parameters<...>` which TS narrows aggressively — a naive `mock.calls[0]?.[0] as string` produces two compile errors under our strict tsconfig. The double cast through `unknown` is the idiomatic escape hatch for "I know the shape, the type system can't see it".
 
 We test the **client**, not the network. Network tests live in the e2e suite.
 
@@ -1175,7 +1179,7 @@ And configure Vite — edit `projects/01-todo/frontend/vite.config.ts`:
 
 ```ts
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [sveltekit()],
@@ -1188,6 +1192,7 @@ export default defineConfig({
 });
 ```
 
+- `import { defineConfig } from 'vitest/config';` — **not** `from 'vite'`. The `vite` package's `defineConfig` does not know about the `test` key, so TypeScript will reject it with `Object literal may only specify known properties, and 'test' does not exist in type 'UserConfigExport'`. The `vitest/config` re-export adds the `test` field to the type. The runtime is identical; this is a types-only distinction. Always use this import in a Vite + Vitest project.
 - `plugins: [sveltekit()]` — Vite + SvelteKit integration.
 - `test.include` — only files matching this pattern are tests.
 - `environment: 'jsdom'` — gives our tests a fake DOM (browser globals like `Response`, `Headers`). Fast.
@@ -1560,6 +1565,13 @@ Edit `projects/01-todo/frontend/src/routes/+page.svelte`:
     </ul>
   {/if}
 </main>
+
+<style>
+  /* See the full `<style>` block in the source file
+     (frontend/src/routes/+page.svelte). It uses the design tokens
+     covered in B.6 — main grid, header layout, .add-form, .primary
+     button, .error, .empty state, .list, and a 768px media query. */
+</style>
 ```
 
 ### Line-by-line — runes in practice
@@ -1637,7 +1649,15 @@ export default defineConfig({
     timeout: 120_000
   },
   projects: [
-    { name: 'mobile-portrait-390', use: { ...devices['Desktop Chrome'], viewport: { width: 390, height: 844 }, hasTouch: true } },
+    {
+      name: 'mobile-portrait-390',
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: { width: 390, height: 844 },
+        isMobile: false,
+        hasTouch: true
+      }
+    },
     { name: 'tablet-768', use: { ...devices['Desktop Chrome'], viewport: { width: 768, height: 1024 } } },
     { name: 'laptop-1024', use: { ...devices['Desktop Chrome'], viewport: { width: 1024, height: 768 } } },
     { name: 'desktop-1440', use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } } }
