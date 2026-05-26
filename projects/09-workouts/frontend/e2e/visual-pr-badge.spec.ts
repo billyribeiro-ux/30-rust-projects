@@ -12,26 +12,23 @@ async function gotoHydrated(page: Page, url: string) {
 }
 
 test('PR badge matches the committed snapshot', async ({ page, request }) => {
-  // Deterministic seed name keyed by viewport so parallel runs don't race.
+  // The snapshot is of the BADGE COMPONENT (deterministic CSS, no
+  // data-driven content), so the seed need only PRODUCE a PR — it does
+  // not need to be deterministic. We use a unique exercise per run so
+  // the very-first-set-always-PR property holds even when the DB has
+  // accumulated history from previous runs.
   const viewportName = test.info().project.name;
-  const exName = `Visual Bench (${viewportName})`;
-  // Re-create the exercise (ignore conflict — name is unique per viewport).
-  await request.post('http://localhost:3008/api/exercises', {
+  const stamp = `${Date.now()}-${Math.floor(Math.random() * 100000)}`;
+  const exName = `Visual Bench ${viewportName} ${stamp}`;
+  const exRes = await request.post('http://localhost:3008/api/exercises', {
     data: { name: exName, muscle_group: 'chest' }
   });
+  expect(exRes.ok(), `exercise create failed: ${await exRes.text()}`).toBe(true);
+  const ex = (await exRes.json()) as { id: string };
 
-  // List ALL exercises and find ours — avoids FTS5 tokenizer surprises
-  // with characters like '(' that the sanitizer strips.
-  const allRes = await request.get('http://localhost:3008/api/exercises');
-  expect(allRes.ok()).toBe(true);
-  const allList = (await allRes.json()) as { id: string; name: string }[];
-  const ex = allList.find((e) => e.name === exName);
-  if (!ex) throw new Error(`seed exercise missing: ${exName}`);
-
-  // One PR-able set in a fresh workout. The first set is always a PR.
   const wRes = await request.post('http://localhost:3008/api/workouts', {
     data: {
-      name: `Visual workout (${viewportName})`,
+      name: `Visual workout ${stamp}`,
       sets: [{ exercise_id: ex.id, weight_minor: 100_000, reps: 5, rir: 0 }]
     }
   });
