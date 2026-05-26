@@ -291,7 +291,9 @@ async fn create(
     tx.commit().await?;
 
     // Re-read so the returned shape (PR flags, exercise names) is consistent.
-    read(State(s), Path(id)).await.map(|json| (StatusCode::CREATED, json))
+    read(State(s), Path(id))
+        .await
+        .map(|json| (StatusCode::CREATED, json))
 }
 
 async fn delete(State(s): State<AppState>, Path(id): Path<String>) -> AppResult<StatusCode> {

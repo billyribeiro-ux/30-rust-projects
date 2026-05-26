@@ -109,8 +109,7 @@ mod tests {
     fn arb_set() -> impl Strategy<Value = SetInput> {
         // weight_minor and reps strictly positive to mirror DB constraints;
         // bounds keep volumes well below i64::MAX.
-        (1i64..=1_000_000, 1i64..=30, 0i64..=1_000_000)
-            .prop_map(|(w, r, t)| s(w, r, t))
+        (1i64..=1_000_000, 1i64..=30, 0i64..=1_000_000).prop_map(|(w, r, t)| s(w, r, t))
     }
 
     fn arb_sets() -> impl Strategy<Value = Vec<SetInput>> {

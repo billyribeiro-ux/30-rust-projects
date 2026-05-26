@@ -219,7 +219,13 @@ fn build_fts_query(raw: &str) -> String {
     // gets a trailing `*` so partial-prefix matching works ("pre" → "press").
     let cleaned: String = raw
         .chars()
-        .map(|c| if c.is_alphanumeric() || c.is_whitespace() { c } else { ' ' })
+        .map(|c| {
+            if c.is_alphanumeric() || c.is_whitespace() {
+                c
+            } else {
+                ' '
+            }
+        })
         .collect();
     let tokens: Vec<String> = cleaned
         .split_whitespace()
