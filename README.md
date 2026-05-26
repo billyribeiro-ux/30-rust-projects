@@ -77,7 +77,7 @@ Tier 2 — Postgres + Auth (11–18):
 
 - [x] **11 — Contact Manager + Dashboard** — first Postgres + Docker Compose + MailHog; Argon2id + server-side hashed sessions + sliding expiry + HttpOnly+SameSite=Lax+Secure cookies; single-use email-verify + password-reset tokens with atomic consume; tsvector FTS with weighted GIN index; `hooks.server.ts` auth handle; cross-origin cookie forwarding; `(auth)`/`(app)` route-group guards; Playwright permission-matrix tests proving server-side per-user scoping.
 - [x] 12 — Job Application Tracker (+ bcrypt legacy-migration lesson)
-- [ ] 13 — Real-time Chat Rooms (+ first JWT)
+- [x] 13 — Real-time Chat Rooms (+ first WebSockets)
 - [ ] 14 — Calendar & Scheduler
 - [ ] 15 — File Vault with Chunked Uploads
 - [ ] 16 — Digital Product Storefront (**Stripe Checkout #1**)
