@@ -70,6 +70,14 @@
     if (drafts.length === 0) addRow();
   }
 
+  // a11y-friendly autofocus: only fires when the action mounts the node,
+  // which happens after the user explicitly opens the picker — so unlike
+  // a static `autofocus` attribute, it can never steal focus on initial
+  // page load (which is the reason svelte-check warns about `autofocus`).
+  function focusOnMount(node: HTMLElement) {
+    queueMicrotask(() => node.focus());
+  }
+
   // Derived: count of valid rows (a row is valid when exercise + weight +
   // reps parse OK). Disable submit until at least one row is valid.
   const validRowCount = $derived(
