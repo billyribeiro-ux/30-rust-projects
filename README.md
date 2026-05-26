@@ -60,8 +60,46 @@ Each project is fully self-contained. No workspaces. `cd projects/01-todo && fol
 
 ## Progress
 
-- [x] **01 — TODO Manager** — first runes, first Axum handler, first sqlx query.
-- [ ] 02 — Markdown Notes
-- [ ] ...
+Tier 1 — SQLite foundations:
 
-(See `CURRICULUM.md` for the full list.)
+- [x] **01 — TODO Manager** — first runes, first Axum handler, first sqlx query.
+- [x] **02 — Markdown Notes** — server-side HTML sanitization, full SEO, JSON-LD, `<svelte:boundary>`, axe-core a11y gate.
+- [x] **03 — Habit Tracker** — `proptest`, SQL islands-and-gaps with window functions, 7×7 keyboard-navigable calendar grid, `prefers-reduced-motion`.
+- [x] **04 — Pomodoro Timer** — `$effect` + `requestAnimationFrame` + `untrack`, Web Audio synthesized chime, `$inspect`, `<svelte:window>` shortcuts.
+- [x] **05 — Bookmark Manager** — many-to-many SQL, URL-as-state filters, typed debounce, `use:clickOutside` action.
+- [x] **06 — Expense Splitter** — `i64` cents money, proptested splitter (largest-remainder method), `$bindable` MoneyInput, field-level errors.
+- [x] **07 — Personal Finance Ledger** — double-entry validation with proptest, `rust_decimal`, CSV import, canvas bar chart from scratch.
+- [x] **08 — Reading Tracker** — Open Library API + `moka` cache, `wiremock-rs` tests, streamed `load`, `$state.raw`, class with rune fields.
+- [ ] 09 — Workout Logger (FTS5, PR detection, axe-core gate, CSV export, visual regression)
+- [ ] 10 — Recipe Book (file uploads, JSON-LD, snippets, service worker, signed share URLs)
+
+Tier 2 — Postgres + Auth (11–18):
+
+- [ ] 11 — Contact Manager + Dashboard (**first Postgres, first auth: Argon2id + sessions**)
+- [ ] 12 — Job Application Tracker (+ bcrypt legacy-migration lesson)
+- [ ] 13 — Real-time Chat Rooms (+ first JWT)
+- [ ] 14 — Calendar & Scheduler
+- [ ] 15 — File Vault with Chunked Uploads
+- [ ] 16 — Digital Product Storefront (**Stripe Checkout #1**)
+- [ ] 17 — URL Shortener + Analytics (+ Redis, + 2FA)
+- [ ] 18 — Polls & Surveys with Live Results
+
+Tier 3 — Animation, payments, scale (19–24):
+
+- [ ] 19 — Kanban Issue Tracker (GSAP #1)
+- [ ] 20 — Geo-aware Restaurant Finder (+ OAuth)
+- [ ] 21 — Newsletter Platform (**Stripe Subscriptions**)
+- [ ] 22 — Background Jobs Dashboard
+- [ ] 23 — Multi-tenant Help Desk (+ Magic Links + RLS)
+- [ ] 24 — Hybrid Search Knowledge Base
+
+Tier 4 — Distinguished work (25–30):
+
+- [ ] 25 — Course Marketplace (**Stripe Connect**)
+- [ ] 26 — Live Coding Interview Platform (+ SAML/SSO)
+- [ ] 27 — Realtime Analytics Dashboard (GSAP #2)
+- [ ] 28 — AI Inference API (**Stripe Metered Billing** + WebAuthn)
+- [ ] 29 — Cinematic Portfolio + CMS (GSAP #3)
+- [ ] 30 — SaaS Capstone — Multi-tenant Project Management
+
+See [`CURRICULUM.md`](./CURRICULUM.md) for the full project specs and [`PATTERNS.md`](./PATTERNS.md) for cross-project conventions.
