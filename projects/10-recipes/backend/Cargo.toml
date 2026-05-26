@@ -1,0 +1,37 @@
+[package]
+name = "recipes-backend"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+axum = { version = "0.8", features = ["macros", "multipart"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "signal", "net", "fs"] }
+tower-http = { version = "0.6", features = ["cors", "trace", "set-header", "fs"] }
+sqlx = { version = "0.8", default-features = false, features = [
+  "runtime-tokio",
+  "tls-rustls",
+  "sqlite",
+  "macros",
+  "migrate",
+  "chrono",
+] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+infer = { version = "0.19", default-features = false }
+image = { version = "0.25", default-features = false, features = ["jpeg", "png", "webp"] }
+hmac = "0.12"
+sha2 = "0.10"
+base64 = "0.22"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["full"] }
+
+[profile.dev]
+opt-level = 0
+debug = 1
