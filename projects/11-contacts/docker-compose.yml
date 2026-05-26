@@ -1,0 +1,35 @@
+# Local infra for Project 11.
+#
+# Postgres 16 with persistent data + MailHog for testing email flows.
+# `docker compose up -d` brings both up. The backend reads DATABASE_URL
+# and SMTP_URL from .env (see .env.example).
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: contacts
+      POSTGRES_PASSWORD: contacts_dev_password
+      POSTGRES_DB: contacts
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U contacts -d contacts"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # MailHog catches all outbound SMTP into a web UI at http://localhost:8025.
+  # Zero config — bind SMTP on :1025 and never deliver to a real inbox.
+  mailhog:
+    image: mailhog/mailhog:latest
+    restart: unless-stopped
+    ports:
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # Web UI
+
+volumes:
+  postgres_data:
