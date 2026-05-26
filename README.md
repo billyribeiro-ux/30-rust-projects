@@ -70,8 +70,8 @@ Tier 1 — SQLite foundations:
 - [x] **06 — Expense Splitter** — `i64` cents money, proptested splitter (largest-remainder method), `$bindable` MoneyInput, field-level errors.
 - [x] **07 — Personal Finance Ledger** — double-entry validation with proptest, `rust_decimal`, CSV import, canvas bar chart from scratch.
 - [x] **08 — Reading Tracker** — Open Library API + `moka` cache, `wiremock-rs` tests, streamed `load`, `$state.raw`, class with rune fields.
-- [ ] 09 — Workout Logger (FTS5, PR detection, axe-core gate, CSV export, visual regression)
-- [ ] 10 — Recipe Book (file uploads, JSON-LD, snippets, service worker, signed share URLs)
+- [x] **09 — Workout Logger** — SQLite FTS5 autocomplete, proptested PR detection (5 properties), axe-core CI gate, CSV export, Playwright visual-regression baselines across 4 viewports.
+- [x] **10 — Recipe Book** — multipart file uploads (mime-sniff via `infer` + EXIF strip via image-encode round-trip), first SvelteKit remote function (`$app/server` query/form/command), module-scoped snippet, full Recipe JSON-LD, first service worker, HMAC-signed 24h share URLs.
 
 Tier 2 — Postgres + Auth (11–18):
 
