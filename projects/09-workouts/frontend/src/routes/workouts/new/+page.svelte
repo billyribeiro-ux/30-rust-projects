@@ -25,7 +25,7 @@
   // owns the popover via an index, and debounce the FTS5 call.
   let activeRow = $state<number | null>(null);
   let query = $state('');
-  let suggestions = $state<Exercise[]>(data.exercises.slice(0, 8));
+  let suggestions = $state<Exercise[]>([]);
   let searchTimer: ReturnType<typeof setTimeout> | null = null;
 
   $effect(() => {
@@ -216,6 +216,7 @@
       <div
         class="modal"
         role="dialog"
+        tabindex="-1"
         aria-label="Pick exercise"
         aria-modal="true"
         onclick={(e) => e.stopPropagation()}
@@ -227,8 +228,8 @@
             type="search"
             bind:value={query}
             placeholder="Search (FTS5)…"
-            autofocus
             aria-label="Search exercises"
+            use:focusOnMount
           />
         </label>
         {#if suggestions.length === 0}
