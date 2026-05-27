@@ -1,0 +1,46 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT id, name, price_cents, currency, file_path\n        FROM products\n        WHERE id = $1 AND active = TRUE\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "price_cents",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 3,
+        "name": "currency",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "file_path",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "aab509dfe689e324ca26c92125c13ceb9c468bfc81d8ae0313c4b9c88e34c6cc"
+}

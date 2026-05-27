@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE download_links SET used_at = COALESCE(used_at, now()) WHERE id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "4efd03a6942cca0dbcff7bcbea48f9ba83309cfffe6dd48c4d36fc4252dbc24b"
+}

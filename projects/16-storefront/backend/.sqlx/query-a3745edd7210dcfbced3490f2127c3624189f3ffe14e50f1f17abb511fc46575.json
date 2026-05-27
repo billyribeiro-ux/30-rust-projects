@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        UPDATE orders\n        SET status = $1,\n            stripe_payment_intent = $2,\n            fulfilled_at = CASE WHEN $1 = 'fulfilled' THEN now() ELSE fulfilled_at END,\n            customer_email = $3\n        WHERE id = $4\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text",
+        "Text",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "a3745edd7210dcfbced3490f2127c3624189f3ffe14e50f1f17abb511fc46575"
+}
