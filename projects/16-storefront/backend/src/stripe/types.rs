@@ -35,12 +35,15 @@ pub struct CheckoutSession {
     #[serde(default)]
     pub payment_intent: Option<String>,
     #[serde(default)]
+    #[allow(dead_code)]
     pub amount_total: Option<i64>,
     #[serde(default)]
+    #[allow(dead_code)]
     pub currency: Option<String>,
     #[serde(default)]
     pub payment_status: Option<String>,
     #[serde(default)]
+    #[allow(dead_code)]
     pub metadata: std::collections::HashMap<String, String>,
 }
 

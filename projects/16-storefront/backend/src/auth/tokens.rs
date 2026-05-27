@@ -16,12 +16,14 @@ pub enum TokenKind {
 }
 
 impl TokenKind {
+    #[allow(dead_code)]
     pub fn as_str(self) -> &'static str {
         match self {
             TokenKind::VerifyEmail => "verify_email",
             TokenKind::PasswordReset => "password_reset",
         }
     }
+    #[allow(dead_code)]
     pub fn ttl(self) -> Duration {
         match self {
             TokenKind::VerifyEmail => Duration::hours(24),
@@ -30,6 +32,7 @@ impl TokenKind {
     }
 }
 
+#[allow(dead_code)]
 pub async fn issue(pool: &PgPool, user_id: Uuid, kind: TokenKind) -> AppResult<String> {
     let raw = session::generate_token();
     let token_hash = session::hash_token(&raw);
