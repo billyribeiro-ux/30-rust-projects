@@ -104,7 +104,10 @@ mod tests {
         let secret = b"my-secret";
         let signed = sign(secret, "the-nonce");
         let parts: Vec<&str> = signed.splitn(2, '.').collect();
-        let tampered = format!("{}.{}", parts[0], "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        let tampered = format!(
+            "{}.{}",
+            parts[0], "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        );
         assert!(verify(secret, &tampered).is_none());
     }
 

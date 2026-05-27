@@ -98,7 +98,6 @@ pub fn now_unix() -> i64 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use hmac::Mac as _;
 
     fn sign(secret: &[u8], ts: i64, body: &[u8]) -> String {
         let mut mac = HmacSha256::new_from_slice(secret).unwrap();

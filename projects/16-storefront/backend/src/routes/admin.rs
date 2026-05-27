@@ -24,7 +24,9 @@ pub fn router() -> Router<AppState> {
         .route("/products", get(list_products).post(create_product))
         .route(
             "/products/{id}",
-            get(get_product).patch(update_product).delete(delete_product),
+            get(get_product)
+                .patch(update_product)
+                .delete(delete_product),
         )
         .route("/products/{id}/file", post(upload_product_file))
         .route("/orders", get(list_orders))
@@ -187,12 +189,9 @@ async fn delete_product(
     Path(id): Path<Uuid>,
 ) -> AppResult<StatusCode> {
     // Soft delete via active=false to avoid breaking existing orders.
-    let res = sqlx::query!(
-        "UPDATE products SET active = FALSE WHERE id = $1",
-        id,
-    )
-    .execute(&s.pool)
-    .await?;
+    let res = sqlx::query!("UPDATE products SET active = FALSE WHERE id = $1", id,)
+        .execute(&s.pool)
+        .await?;
     if res.rows_affected() == 0 {
         return Err(AppError::NotFound);
     }
@@ -222,7 +221,13 @@ async fn upload_product_file(
     let safe_name = input
         .file_name
         .chars()
-        .map(|c| if c.is_ascii_alphanumeric() || c == '.' || c == '_' || c == '-' { c } else { '_' })
+        .map(|c| {
+            if c.is_ascii_alphanumeric() || c == '.' || c == '_' || c == '-' {
+                c
+            } else {
+                '_'
+            }
+        })
         .collect::<String>();
     let on_disk = format!("{id}-{safe_name}");
     let full_path = s.product_files_dir.join(&on_disk);

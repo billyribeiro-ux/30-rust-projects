@@ -38,6 +38,7 @@ impl StripeClient {
     /// Create a Checkout Session.
     /// Stripe form-encodes `line_items[0][price_data][...]=...`.
     /// We pass the customer email so Stripe pre-fills the receipt.
+    #[allow(clippy::too_many_arguments)]
     pub async fn create_checkout_session(
         &self,
         customer_email: &str,
@@ -74,12 +75,8 @@ impl StripeClient {
             form.push((format!("metadata[{k}]"), v.clone()));
         }
 
-        self.post::<CreatedSession>(
-            "/v1/checkout/sessions",
-            &form,
-            Some(idempotency_key),
-        )
-        .await
+        self.post::<CreatedSession>("/v1/checkout/sessions", &form, Some(idempotency_key))
+            .await
     }
 
     /// Refund a payment by its PaymentIntent id.

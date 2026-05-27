@@ -14,12 +14,12 @@
 //! INSERT skips, so we won't double-fulfil. The lesson here: idempotency
 //! key in the DB > "process exactly once" guarantees.
 
+use axum::Router;
 use axum::body::Bytes;
 use axum::extract::State;
 use axum::http::{HeaderMap, StatusCode};
 use axum::response::IntoResponse;
 use axum::routing::post;
-use axum::Router;
 use chrono::{Duration, Utc};
 use uuid::Uuid;
 
@@ -121,7 +121,12 @@ async fn fulfil_checkout(s: &AppState, session: &CheckoutSession) -> AppResult<(
     let email = session
         .customer_email
         .clone()
-        .or_else(|| session.customer_details.as_ref().and_then(|c| c.email.clone()))
+        .or_else(|| {
+            session
+                .customer_details
+                .as_ref()
+                .and_then(|c| c.email.clone())
+        })
         .ok_or_else(|| AppError::Validation("no email on session".into()))?
         .to_lowercase();
 
@@ -139,9 +144,7 @@ async fn fulfil_checkout(s: &AppState, session: &CheckoutSession) -> AppResult<(
     )
     .fetch_optional(&mut *tx)
     .await?
-    .ok_or_else(|| {
-        AppError::Validation(format!("no local order for session {}", session.id))
-    })?;
+    .ok_or_else(|| AppError::Validation(format!("no local order for session {}", session.id)))?;
 
     if order.status == "fulfilled" || order.status == "refunded" {
         tracing::info!(order_id = %order.id, "order already fulfilled; skipping");
@@ -208,11 +211,7 @@ async fn fulfil_checkout(s: &AppState, session: &CheckoutSession) -> AppResult<(
         .execute(&mut *tx)
         .await?;
 
-        let url = format!(
-            "{}/d/{}",
-            s.public_url.trim_end_matches('/'),
-            signed_token
-        );
+        let url = format!("{}/d/{}", s.public_url.trim_end_matches('/'), signed_token);
         links.push((item.product_name, url));
     }
 
@@ -222,12 +221,8 @@ async fn fulfil_checkout(s: &AppState, session: &CheckoutSession) -> AppResult<(
     // the email module logs failures and lets the user re-request from
     // the success page.
     for (name, url) in links {
-        let (subj, body) = email::download_ready_body(
-            &s.public_url,
-            &name,
-            &url,
-            SIGNED_LINK_TTL_HOURS,
-        );
+        let (subj, body) =
+            email::download_ready_body(&s.public_url, &name, &url, SIGNED_LINK_TTL_HOURS);
         s.mailer.send(&email, &subj, body).await;
     }
 

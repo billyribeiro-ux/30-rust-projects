@@ -26,7 +26,9 @@ async fn create_checkout_session_posts_expected_form() {
         .and(header("Idempotency-Key", "idem-001"))
         .and(body_string_contains("mode=payment"))
         .and(body_string_contains("customer_email=buyer%40example.com"))
-        .and(body_string_contains("line_items%5B0%5D%5Bprice_data%5D%5Bunit_amount%5D=999"))
+        .and(body_string_contains(
+            "line_items%5B0%5D%5Bprice_data%5D%5Bunit_amount%5D=999",
+        ))
         .respond_with(ResponseTemplate::new(200).set_body_json(&response))
         .expect(1)
         .mount(&mock_server)
@@ -72,7 +74,10 @@ async fn refund_payment_intent_posts_expected_form() {
         .await;
 
     let client = stripe_client::StripeClient::new(mock_server.uri(), "sk_test_dummy").unwrap();
-    let r = client.refund_payment_intent("pi_123", "rf-1").await.unwrap();
+    let r = client
+        .refund_payment_intent("pi_123", "rf-1")
+        .await
+        .unwrap();
     assert_eq!(r.id, "re_1ABC");
     assert_eq!(r.status, "succeeded");
 }

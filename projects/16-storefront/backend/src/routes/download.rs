@@ -7,12 +7,12 @@
 //!   3) Reject if expired / revoked / used (configurable).
 //!   4) Stream the file from disk.
 
+use axum::Router;
 use axum::body::Body;
 use axum::extract::{Path, State};
 use axum::http::{HeaderMap, HeaderValue, StatusCode, header};
 use axum::response::{IntoResponse, Response};
 use axum::routing::get;
-use axum::Router;
 use tokio_util::io::ReaderStream;
 
 use crate::error::{AppError, AppResult};
@@ -23,10 +23,7 @@ pub fn router() -> Router<AppState> {
     Router::new().route("/{token}", get(download))
 }
 
-async fn download(
-    State(s): State<AppState>,
-    Path(token): Path<String>,
-) -> AppResult<Response> {
+async fn download(State(s): State<AppState>, Path(token): Path<String>) -> AppResult<Response> {
     // 1) Fail fast on signature.
     if signing::verify(&s.download_signing_secret, &token).is_none() {
         return Err(AppError::NotFound);
@@ -99,10 +96,10 @@ async fn download(
     if let Ok(hv) = HeaderValue::from_str(&disposition) {
         h.insert(header::CONTENT_DISPOSITION, hv);
     }
-    if let Some(sz) = size {
-        if let Ok(hv) = HeaderValue::from_str(&sz.to_string()) {
-            h.insert(header::CONTENT_LENGTH, hv);
-        }
+    if let Some(sz) = size
+        && let Ok(hv) = HeaderValue::from_str(&sz.to_string())
+    {
+        h.insert(header::CONTENT_LENGTH, hv);
     }
 
     Ok((StatusCode::OK, h, body).into_response())
