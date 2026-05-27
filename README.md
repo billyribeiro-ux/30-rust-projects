@@ -82,7 +82,7 @@ Tier 2 — Postgres + Auth (11–18):
 - [ ] 15 — File Vault with Chunked Uploads
 - [ ] 16 — Digital Product Storefront (**Stripe Checkout #1**)
 - [x] 17 — URL Shortener + Analytics (+ Redis, + 2FA)
-- [ ] 18 — Polls & Surveys with Live Results
+- [x] 18 — Polls & Surveys with Live Results
 
 Tier 3 — Animation, payments, scale (19–24):
 
