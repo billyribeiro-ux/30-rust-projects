@@ -7,20 +7,12 @@
 
   let { data }: PageProps = $props();
 
-  // We capture initial data into local state so the dropzone progress UI
-  // can render without bouncing values back through SvelteKit.
-  // svelte-ignore state_referenced_locally
-  let folders = $state<Folder[]>(data.folders);
-  // svelte-ignore state_referenced_locally
-  let files = $state<FileRow[]>(data.files);
-  // svelte-ignore state_referenced_locally
-  let folderId = $state<string | null>(data.folderId);
-
-  $effect(() => {
-    folders = data.folders;
-    files = data.files;
-    folderId = data.folderId;
-  });
+  // Server-loaded data is read-only here: re-fetched via `invalidateAll()`
+  // after mutations. `$derived` reads it freshly on every dep change without
+  // the "assigning state inside $effect" anti-pattern.
+  const folders = $derived<Folder[]>(data.folders);
+  const files = $derived<FileRow[]>(data.files);
+  const folderId = $derived<string | null>(data.folderId);
 
   type UploadingItem = {
     name: string;
