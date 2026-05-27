@@ -1,0 +1,23 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM upload_sessions WHERE id = $1 AND owner_id = $2 RETURNING temp_path",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "temp_path",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "6b1bf4d1944e5af1ff3e99559b9959bfab2ad1365405bcd98a9a23ef33dfb98c"
+}

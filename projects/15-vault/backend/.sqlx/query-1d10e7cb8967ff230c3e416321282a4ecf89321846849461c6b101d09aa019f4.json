@@ -1,0 +1,29 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT received, total_size FROM upload_sessions\n        WHERE id = $1 AND owner_id = $2 AND expires_at > now()\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "received",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 1,
+        "name": "total_size",
+        "type_info": "Int8"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false
+    ]
+  },
+  "hash": "1d10e7cb8967ff230c3e416321282a4ecf89321846849461c6b101d09aa019f4"
+}
