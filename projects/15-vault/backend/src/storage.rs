@@ -44,14 +44,18 @@ impl Storage {
                     builder = builder.with_endpoint(ep);
                 }
                 let s3 = builder.build()?;
-                Ok(Storage { inner: Arc::new(s3) })
+                Ok(Storage {
+                    inner: Arc::new(s3),
+                })
             }
             _ => {
                 let root =
                     std::env::var("VAULT_LOCAL_ROOT").unwrap_or_else(|_| "./data/blobs".into());
                 std::fs::create_dir_all(&root)?;
                 let local = LocalFileSystem::new_with_prefix(Path::new(&root))?;
-                Ok(Storage { inner: Arc::new(local) })
+                Ok(Storage {
+                    inner: Arc::new(local),
+                })
             }
         }
     }
@@ -74,9 +78,10 @@ impl Storage {
     pub async fn get(&self, sha256: &str) -> AppResult<Bytes> {
         let path = Self::blob_path(sha256);
         let r = self.inner.get(&path).await.map_err(AppError::from)?;
-        Ok(r.bytes().await.map_err(AppError::from)?)
+        r.bytes().await.map_err(AppError::from)
     }
 
+    #[allow(dead_code)]
     pub async fn exists(&self, sha256: &str) -> AppResult<bool> {
         let path = Self::blob_path(sha256);
         match self.inner.head(&path).await {

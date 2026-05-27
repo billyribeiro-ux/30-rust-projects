@@ -144,7 +144,10 @@ async fn download(
     );
     let resp = Response::builder()
         .status(StatusCode::OK)
-        .header(header::CONTENT_TYPE, HeaderValue::from_str(&row.mime).unwrap())
+        .header(
+            header::CONTENT_TYPE,
+            HeaderValue::from_str(&row.mime).unwrap(),
+        )
         .header(header::CONTENT_LENGTH, row.size)
         .header(header::CONTENT_DISPOSITION, disposition)
         .body(Body::from(bytes))

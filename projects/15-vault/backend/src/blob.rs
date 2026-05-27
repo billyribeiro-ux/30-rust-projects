@@ -75,7 +75,10 @@ mod tests {
 
     #[test]
     fn sniff_unknown_is_octet_stream() {
-        assert_eq!(sniff_mime(b"definitely not a known file format"), "application/octet-stream");
+        assert_eq!(
+            sniff_mime(b"definitely not a known file format"),
+            "application/octet-stream"
+        );
     }
 
     #[test]

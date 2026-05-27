@@ -34,12 +34,10 @@ use crate::error::{AppError, AppResult, FieldError};
 use crate::state::AppState;
 
 pub fn router() -> Router<AppState> {
-    Router::new()
-        .route("/", post(create))
-        .route(
-            "/{id}",
-            axum::routing::patch(append).head(head).delete(cancel),
-        )
+    Router::new().route("/", post(create)).route(
+        "/{id}",
+        axum::routing::patch(append).head(head).delete(cancel),
+    )
 }
 
 // ---------------- create ----------------
@@ -232,12 +230,9 @@ async fn append(
         let final_size = final_bytes.len() as i64;
 
         // dedup check
-        let existing = sqlx::query!(
-            "SELECT id FROM file_versions WHERE sha256 = $1",
-            final_sha,
-        )
-        .fetch_optional(&s.pool)
-        .await?;
+        let existing = sqlx::query!("SELECT id FROM file_versions WHERE sha256 = $1", final_sha,)
+            .fetch_optional(&s.pool)
+            .await?;
 
         let version_id = if let Some(v) = existing {
             v.id
@@ -322,11 +317,10 @@ async fn cancel(
 /// Delete upload sessions that are past `expires_at`, plus their temp files.
 /// Called from a tokio task in main.rs on a 1-hour cadence.
 pub async fn reap_stale(pool: &PgPool) -> AppResult<u64> {
-    let rows = sqlx::query!(
-        "DELETE FROM upload_sessions WHERE expires_at < now() RETURNING temp_path",
-    )
-    .fetch_all(pool)
-    .await?;
+    let rows =
+        sqlx::query!("DELETE FROM upload_sessions WHERE expires_at < now() RETURNING temp_path",)
+            .fetch_all(pool)
+            .await?;
     let n = rows.len() as u64;
     for r in rows {
         let _ = tokio::fs::remove_file(&r.temp_path).await;

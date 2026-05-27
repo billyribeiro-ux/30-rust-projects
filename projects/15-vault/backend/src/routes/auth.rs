@@ -182,6 +182,9 @@ mod tests {
 
     #[test]
     fn email_rejects_malformed() {
-        assert!(matches!(normalize_email("not-an-email"), Err(AppError::Fields(_))));
+        assert!(matches!(
+            normalize_email("not-an-email"),
+            Err(AppError::Fields(_))
+        ));
     }
 }
