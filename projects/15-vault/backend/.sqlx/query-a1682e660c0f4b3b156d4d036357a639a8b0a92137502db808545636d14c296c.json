@@ -1,0 +1,65 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT f.id AS \"id!\", f.folder_id, f.name AS \"name!\",\n               v.size AS \"size!\", v.mime AS \"mime!\", v.sha256 AS \"sha256!\",\n               f.created_at AS \"created_at!\", f.updated_at AS \"updated_at!\"\n        FROM files f\n        JOIN file_versions v ON v.id = f.version_id\n        WHERE f.owner_id = $1\n          AND f.folder_id IS NOT DISTINCT FROM $2\n        ORDER BY f.name\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id!",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "folder_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "name!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "size!",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 4,
+        "name": "mime!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "sha256!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "created_at!",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 7,
+        "name": "updated_at!",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "a1682e660c0f4b3b156d4d036357a639a8b0a92137502db808545636d14c296c"
+}

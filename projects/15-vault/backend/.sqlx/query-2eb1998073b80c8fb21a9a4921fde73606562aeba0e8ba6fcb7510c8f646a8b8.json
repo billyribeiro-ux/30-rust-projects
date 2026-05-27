@@ -1,0 +1,53 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT received, total_size, temp_path, folder_id, filename, content_type\n        FROM upload_sessions\n        WHERE id = $1 AND owner_id = $2 AND expires_at > now()\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "received",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 1,
+        "name": "total_size",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 2,
+        "name": "temp_path",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "folder_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 4,
+        "name": "filename",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "content_type",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true,
+      false,
+      false
+    ]
+  },
+  "hash": "2eb1998073b80c8fb21a9a4921fde73606562aeba0e8ba6fcb7510c8f646a8b8"
+}

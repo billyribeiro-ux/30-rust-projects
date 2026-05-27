@@ -1,0 +1,20 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM upload_sessions WHERE expires_at < now() RETURNING temp_path",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "temp_path",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "00211afb53dc3c690aafef6b2adeafd4e2daa1219f8e7f047fb31618054649c9"
+}

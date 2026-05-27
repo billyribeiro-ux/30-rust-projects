@@ -1,0 +1,21 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        INSERT INTO upload_sessions\n            (id, owner_id, folder_id, filename, content_type,\n             total_size, received, temp_path, expires_at)\n        VALUES ($1, $2, $3, $4, $5, $6, 0, $7, $8)\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Uuid",
+        "Text",
+        "Text",
+        "Int8",
+        "Text",
+        "Timestamptz"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "655c74ba47914edcd0afefd619efc09e484022a90ffd285f13e928c51b888796"
+}
