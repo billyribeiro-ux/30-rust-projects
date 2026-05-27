@@ -1,0 +1,23 @@
+services:
+  db:
+    # PostGIS bundles Postgres 16 + PostGIS 3.4. The Alpine variant is
+    # ~80 MB extra over plain postgres:16-alpine, the cost of getting
+    # `CREATE EXTENSION postgis` and the GEOGRAPHY type, GiST indexes,
+    # and `ST_DWithin` for "find places within N metres of (lat,lng)".
+    image: postgis/postgis:16-3.4-alpine
+    environment:
+      POSTGRES_USER: finder
+      POSTGRES_PASSWORD: finder_dev_password
+      POSTGRES_DB: finder
+    ports:
+      - "5441:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U finder -d finder"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data: {}
