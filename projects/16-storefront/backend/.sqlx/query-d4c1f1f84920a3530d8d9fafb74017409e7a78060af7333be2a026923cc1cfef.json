@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE download_links SET revoked_at = now() WHERE order_id = $1 AND revoked_at IS NULL",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "d4c1f1f84920a3530d8d9fafb74017409e7a78060af7333be2a026923cc1cfef"
+}

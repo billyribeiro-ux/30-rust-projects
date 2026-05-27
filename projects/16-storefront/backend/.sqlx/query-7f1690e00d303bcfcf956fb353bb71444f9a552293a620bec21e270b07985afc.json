@@ -1,0 +1,24 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        INSERT INTO stripe_events (event_id, type, payload)\n        VALUES ($1, $2, $3)\n        ON CONFLICT (event_id) DO NOTHING\n        RETURNING event_id\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "event_id",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text",
+        "Jsonb"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "7f1690e00d303bcfcf956fb353bb71444f9a552293a620bec21e270b07985afc"
+}

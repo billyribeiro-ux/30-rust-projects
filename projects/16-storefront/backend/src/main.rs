@@ -1,12 +1,3 @@
-mod auth;
-mod db;
-mod email;
-mod error;
-mod routes;
-mod signing;
-mod state;
-mod stripe;
-
 use axum::Router;
 use axum::http::{HeaderValue, Method};
 use std::net::SocketAddr;
@@ -16,9 +7,11 @@ use tower_http::cors::CorsLayer;
 use tower_http::trace::TraceLayer;
 use tracing_subscriber::EnvFilter;
 
-use crate::email::Mailer;
-use crate::state::AppState;
-use crate::stripe::client::StripeClient;
+use storefront_backend::db;
+use storefront_backend::email::Mailer;
+use storefront_backend::routes;
+use storefront_backend::state::AppState;
+use storefront_backend::stripe::client::StripeClient;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {

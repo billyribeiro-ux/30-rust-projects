@@ -2,7 +2,9 @@
 //!
 //! The Stripe signature header looks like:
 //!
-//!     Stripe-Signature: t=1614265330,v1=<hex>,v1=<hex>,v0=<legacy>
+//! ```text
+//! Stripe-Signature: t=1614265330,v1=<hex>,v1=<hex>,v0=<legacy>
+//! ```
 //!
 //! Per Stripe's docs we:
 //!   1) Parse the header into `t` and ALL `v1=` schemes.
