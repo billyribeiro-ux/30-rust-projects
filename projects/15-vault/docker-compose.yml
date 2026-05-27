@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: vault
+      POSTGRES_PASSWORD: vault_dev_password
+      POSTGRES_DB: vault
+    ports:
+      - "5436:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vault -d vault"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+  # Optional. Default storage backend is the local FS so this is here only
+  # if you want to exercise the S3 code path. Set VAULT_STORAGE=s3 to use it.
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9012"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9011:9000"
+      - "9012:9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  postgres_data: {}
+  minio_data: {}
