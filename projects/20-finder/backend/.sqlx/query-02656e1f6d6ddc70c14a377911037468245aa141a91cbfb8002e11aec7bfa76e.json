@@ -1,0 +1,18 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        INSERT INTO reviews (id, place_id, user_id, rating, body)\n        VALUES ($1, $2, $3, $4, $5)\n        ON CONFLICT (place_id, user_id) DO UPDATE\n            SET rating = EXCLUDED.rating,\n                body   = EXCLUDED.body\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Uuid",
+        "Int2",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "02656e1f6d6ddc70c14a377911037468245aa141a91cbfb8002e11aec7bfa76e"
+}

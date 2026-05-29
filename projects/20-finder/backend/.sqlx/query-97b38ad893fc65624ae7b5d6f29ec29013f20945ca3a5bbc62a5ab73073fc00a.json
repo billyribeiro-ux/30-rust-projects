@@ -1,0 +1,52 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT r.id AS \"id!: Uuid\",\n               r.user_id AS \"user_id!: Uuid\",\n               u.name    AS \"user_name!\",\n               r.rating  AS \"rating!: i16\",\n               r.body    AS \"body!\",\n               r.created_at AS \"created_at!: DateTime<Utc>\"\n        FROM reviews r\n        JOIN users u ON u.id = r.user_id\n        WHERE r.place_id = $1\n        ORDER BY r.created_at DESC\n        LIMIT 50\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id!: Uuid",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "user_id!: Uuid",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "user_name!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "rating!: i16",
+        "type_info": "Int2"
+      },
+      {
+        "ordinal": 4,
+        "name": "body!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "created_at!: DateTime<Utc>",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "97b38ad893fc65624ae7b5d6f29ec29013f20945ca3a5bbc62a5ab73073fc00a"
+}

@@ -1,0 +1,86 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                SELECT\n                    p.id          AS \"id!: Uuid\",\n                    p.name        AS \"name!\",\n                    p.cuisine     AS \"cuisine!\",\n                    p.address     AS \"address!\",\n                    ST_Y(p.geom::geometry) AS \"lat!: f64\",\n                    ST_X(p.geom::geometry) AS \"lng!: f64\",\n                    ST_Distance(p.geom, ST_SetSRID(ST_MakePoint($2, $1), 4326)::geography) AS \"distance_m!: f64\",\n                    (SELECT AVG(rating)::float8 FROM reviews r WHERE r.place_id = p.id) AS \"avg_rating: f64\",\n                    COALESCE((SELECT COUNT(*) FROM reviews r WHERE r.place_id = p.id), 0) AS \"review_count!: i64\",\n                    p.created_at  AS \"created_at!: DateTime<Utc>\",\n                    p.updated_at  AS \"updated_at!: DateTime<Utc>\"\n                FROM places p\n                WHERE ST_DWithin(\n                        p.geom,\n                        ST_SetSRID(ST_MakePoint($2, $1), 4326)::geography,\n                        $3\n                      )\n                  AND ($4::text IS NULL OR p.cuisine = $4)\n                  AND ($5::text IS NULL OR (p.name ILIKE '%' || $5 || '%' OR p.address ILIKE '%' || $5 || '%'))\n                ORDER BY p.geom <-> ST_SetSRID(ST_MakePoint($2, $1), 4326)::geography\n                LIMIT 100\n                ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id!: Uuid",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "name!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "cuisine!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "address!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "lat!: f64",
+        "type_info": "Float8"
+      },
+      {
+        "ordinal": 5,
+        "name": "lng!: f64",
+        "type_info": "Float8"
+      },
+      {
+        "ordinal": 6,
+        "name": "distance_m!: f64",
+        "type_info": "Float8"
+      },
+      {
+        "ordinal": 7,
+        "name": "avg_rating: f64",
+        "type_info": "Float8"
+      },
+      {
+        "ordinal": 8,
+        "name": "review_count!: i64",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 9,
+        "name": "created_at!: DateTime<Utc>",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 10,
+        "name": "updated_at!: DateTime<Utc>",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Float8",
+        "Float8",
+        "Float8",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      null,
+      null,
+      null,
+      null,
+      null,
+      false,
+      false
+    ]
+  },
+  "hash": "5cfc68680fdca829faf3cf79660a513a877b2e96b1fc0cacd15cff7ffbdd2839"
+}
