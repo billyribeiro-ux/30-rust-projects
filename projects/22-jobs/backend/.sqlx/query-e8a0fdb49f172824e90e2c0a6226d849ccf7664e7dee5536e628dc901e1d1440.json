@@ -1,0 +1,97 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        WITH claimed AS (\n            SELECT id\n            FROM jobs\n            WHERE queue = $1\n              AND status = 'pending'\n              AND run_at <= now()\n            ORDER BY run_at\n            LIMIT $2\n            FOR UPDATE SKIP LOCKED\n        )\n        UPDATE jobs\n        SET status = 'running',\n            locked_until = $3,\n            locked_by = $4,\n            attempts = attempts + 1,\n            updated_at = now()\n        FROM claimed\n        WHERE jobs.id = claimed.id\n        RETURNING\n            jobs.id,\n            jobs.queue,\n            jobs.kind,\n            jobs.payload,\n            jobs.attempts,\n            jobs.max_attempts,\n            jobs.run_at,\n            jobs.locked_until,\n            jobs.locked_by,\n            jobs.status,\n            jobs.last_error,\n            jobs.created_at,\n            jobs.updated_at\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "queue",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "kind",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "payload",
+        "type_info": "Jsonb"
+      },
+      {
+        "ordinal": 4,
+        "name": "attempts",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 5,
+        "name": "max_attempts",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 6,
+        "name": "run_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 7,
+        "name": "locked_until",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 8,
+        "name": "locked_by",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 9,
+        "name": "status",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 10,
+        "name": "last_error",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 11,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 12,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Int8",
+        "Timestamptz",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      true,
+      false,
+      false
+    ]
+  },
+  "hash": "e8a0fdb49f172824e90e2c0a6226d849ccf7664e7dee5536e628dc901e1d1440"
+}

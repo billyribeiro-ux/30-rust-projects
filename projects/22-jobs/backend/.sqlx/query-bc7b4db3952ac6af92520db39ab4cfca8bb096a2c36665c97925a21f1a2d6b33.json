@@ -1,0 +1,50 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT\n            queue                                            AS \"queue!\",\n            SUM((status = 'pending')::int)::bigint           AS \"pending!\",\n            SUM((status = 'running')::int)::bigint           AS \"running!\",\n            SUM((status = 'succeeded')::int)::bigint         AS \"succeeded!\",\n            SUM((status = 'failed')::int)::bigint            AS \"failed!\",\n            SUM((status = 'dead')::int)::bigint              AS \"dead!\"\n        FROM jobs\n        GROUP BY queue\n        ORDER BY queue\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "queue!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 1,
+        "name": "pending!",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 2,
+        "name": "running!",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 3,
+        "name": "succeeded!",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 4,
+        "name": "failed!",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 5,
+        "name": "dead!",
+        "type_info": "Int8"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "bc7b4db3952ac6af92520db39ab4cfca8bb096a2c36665c97925a21f1a2d6b33"
+}

@@ -1,0 +1,24 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        UPDATE jobs\n        SET status = CASE\n                       WHEN attempts >= max_attempts THEN 'dead'\n                       ELSE 'pending'\n                     END,\n            run_at = CASE\n                       WHEN attempts >= max_attempts THEN run_at\n                       ELSE $2\n                     END,\n            locked_until = NULL,\n            locked_by = NULL,\n            last_error = $3,\n            updated_at = now()\n        WHERE id = $1\n        RETURNING status\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "status",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Timestamptz",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "27260974d24507549c48584872b3d452555d59c20457b60c04702933ca8b456e"
+}

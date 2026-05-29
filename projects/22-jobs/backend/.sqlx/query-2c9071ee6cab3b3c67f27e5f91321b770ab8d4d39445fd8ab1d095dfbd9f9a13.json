@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        INSERT INTO job_results (job_id, attempt, started_at, finished_at, success, log)\n        VALUES ($1, $2, now(), now(), $3, $4)\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Int4",
+        "Bool",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "2c9071ee6cab3b3c67f27e5f91321b770ab8d4d39445fd8ab1d095dfbd9f9a13"
+}
