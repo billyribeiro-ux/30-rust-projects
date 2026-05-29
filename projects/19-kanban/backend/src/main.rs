@@ -1,17 +1,8 @@
-mod auth;
-mod db;
-mod error;
-mod routes;
-mod state;
-
-use axum::Router;
-use axum::http::{HeaderValue, Method};
 use std::net::SocketAddr;
-use tower_http::cors::CorsLayer;
-use tower_http::trace::TraceLayer;
 use tracing_subscriber::EnvFilter;
 
-use crate::state::AppState;
+use kanban_backend::state::AppState;
+use kanban_backend::{build_app, db};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -44,27 +35,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         secure_cookies,
     };
 
-    let cors = CorsLayer::new()
-        .allow_origin(frontend_origin.parse::<HeaderValue>()?)
-        .allow_methods([
-            Method::GET,
-            Method::POST,
-            Method::PATCH,
-            Method::PUT,
-            Method::DELETE,
-        ])
-        .allow_headers([axum::http::header::CONTENT_TYPE])
-        .allow_credentials(true);
-
-    let app = Router::new()
-        .nest("/api/auth", routes::auth::router())
-        .nest("/api/boards", routes::boards::router())
-        .nest("/api/lists", routes::lists::router())
-        .nest("/api/cards", routes::cards::router())
-        .route("/healthz", axum::routing::get(health))
-        .with_state(state)
-        .layer(TraceLayer::new_for_http())
-        .layer(cors);
+    let app = build_app(state, &frontend_origin);
 
     let addr = SocketAddr::from(([0, 0, 0, 0], port));
     tracing::info!(%addr, "server listening");
@@ -73,10 +44,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .with_graceful_shutdown(shutdown_signal())
         .await?;
     Ok(())
-}
-
-async fn health() -> &'static str {
-    "ok"
 }
 
 async fn shutdown_signal() {
