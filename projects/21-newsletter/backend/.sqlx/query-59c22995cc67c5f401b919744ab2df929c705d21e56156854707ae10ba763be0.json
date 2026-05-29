@@ -1,0 +1,20 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT subscriber_id\n        FROM subscriptions\n        WHERE status = 'past_due'\n          AND past_due_since IS NOT NULL\n          AND past_due_since < now() - INTERVAL '14 days'\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "subscriber_id",
+        "type_info": "Uuid"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "59c22995cc67c5f401b919744ab2df929c705d21e56156854707ae10ba763be0"
+}

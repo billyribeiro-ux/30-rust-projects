@@ -1,0 +1,58 @@
+[package]
+name = "newsletter-backend"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+axum = { version = "0.8", features = ["macros"] }
+axum-extra = { version = "0.10", features = ["cookie", "cookie-private"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "signal", "net", "time"] }
+tower-http = { version = "0.6", features = ["cors", "trace", "set-header"] }
+sqlx = { version = "0.8", default-features = false, features = [
+  "runtime-tokio",
+  "tls-rustls",
+  "postgres",
+  "macros",
+  "migrate",
+  "chrono",
+  "uuid",
+  "json",
+] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+
+# Auth (ported from project 14/15)
+argon2 = "0.5"
+rand = "0.8"
+base64 = "0.22"
+sha2 = "0.10"
+subtle = "2.6"
+time = "0.3"
+
+# Stripe (hand-rolled HTTP client, webhook signature verify)
+reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }
+hmac = "0.12"
+hex = "0.4"
+url = "2"
+
+# Markdown
+pulldown-cmark = "0.13"
+ammonia = "4"
+
+# Email
+lettre = { version = "0.11", default-features = false, features = ["tokio1-rustls-tls", "smtp-transport", "builder"] }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["full"] }
+reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }
+wiremock = "0.6"
+
+[profile.dev]
+opt-level = 0
+debug = 1

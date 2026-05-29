@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT s.plan = 'pro'\n            FROM subscriber_sessions ss\n            JOIN subscriptions s ON s.subscriber_id = ss.subscriber_id\n            WHERE ss.token_hash = $1 AND ss.expires_at > now()\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "?column?",
+        "type_info": "Bool"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Bytea"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "c1e164ae7474ab794fef5aef27e59a61ac60f26d70a808e1a995edc14519f23b"
+}

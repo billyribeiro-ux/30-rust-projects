@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT sub.id, sub.email\n            FROM subscriber_sessions ss\n            JOIN subscribers sub ON sub.id = ss.subscriber_id\n            WHERE ss.token_hash = $1 AND ss.expires_at > now()\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "email",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Bytea"
+      ]
+    },
+    "nullable": [
+      false,
+      false
+    ]
+  },
+  "hash": "029e4f257f98b0ba6bbcd9b16cd150e18a8842eb3f2d747836ca1cbe18bec119"
+}

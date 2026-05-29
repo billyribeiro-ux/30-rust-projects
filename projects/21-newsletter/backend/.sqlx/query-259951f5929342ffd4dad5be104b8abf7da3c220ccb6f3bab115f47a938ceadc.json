@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        UPDATE subscriptions\n        SET status = 'past_due',\n            past_due_since = COALESCE(past_due_since, now()),\n            updated_at = now()\n        WHERE stripe_customer_id = $1\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "259951f5929342ffd4dad5be104b8abf7da3c220ccb6f3bab115f47a938ceadc"
+}
