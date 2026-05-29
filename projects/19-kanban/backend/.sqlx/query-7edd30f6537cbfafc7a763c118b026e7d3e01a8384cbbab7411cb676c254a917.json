@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT l.board_id AS \"board_id!\"\n        FROM cards c JOIN lists l ON l.id = c.list_id\n        WHERE c.id = $1\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "board_id!",
+        "type_info": "Uuid"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "7edd30f6537cbfafc7a763c118b026e7d3e01a8384cbbab7411cb676c254a917"
+}

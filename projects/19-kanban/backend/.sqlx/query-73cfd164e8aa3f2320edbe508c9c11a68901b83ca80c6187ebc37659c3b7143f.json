@@ -1,0 +1,58 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT b.id, b.owner_id, b.name, b.slug, b.created_at, b.updated_at,\n               CASE WHEN b.owner_id = $1 THEN 'admin' ELSE m.role END AS \"role!\"\n        FROM boards b\n        LEFT JOIN memberships m\n          ON m.board_id = b.id AND m.user_id = $1\n        WHERE b.owner_id = $1 OR m.user_id = $1\n        ORDER BY b.created_at DESC\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "owner_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "slug",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 5,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 6,
+        "name": "role!",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      null
+    ]
+  },
+  "hash": "73cfd164e8aa3f2320edbe508c9c11a68901b83ca80c6187ebc37659c3b7143f"
+}
