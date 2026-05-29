@@ -1,0 +1,18 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO tickets (id, tenant_id, customer_user_id, subject, priority)\n           VALUES ($1, $2, $3, $4, $5)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Uuid",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "819ceef2080d27f2f85efdd4a36b10dfbf2ea1637762f43c97aafeeb0813125c"
+}

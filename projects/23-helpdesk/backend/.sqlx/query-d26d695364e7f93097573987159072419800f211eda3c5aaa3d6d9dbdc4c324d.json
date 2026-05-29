@@ -1,0 +1,52 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT id, actor_user_id, action, entity_kind, entity_id, created_at\n           FROM audit_log\n           WHERE tenant_id = $1\n           ORDER BY created_at DESC LIMIT 500",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 1,
+        "name": "actor_user_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "action",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "entity_kind",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "entity_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 5,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      true,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "d26d695364e7f93097573987159072419800f211eda3c5aaa3d6d9dbdc4c324d"
+}

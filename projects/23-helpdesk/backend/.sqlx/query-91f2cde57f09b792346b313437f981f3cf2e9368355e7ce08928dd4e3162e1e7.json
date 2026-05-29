@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        UPDATE magic_links\n        SET used_at = now()\n        WHERE token_hash = $1 AND used_at IS NULL AND expires_at > now()\n        RETURNING email, tenant_id\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "email",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 1,
+        "name": "tenant_id",
+        "type_info": "Uuid"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Bytea"
+      ]
+    },
+    "nullable": [
+      false,
+      false
+    ]
+  },
+  "hash": "91f2cde57f09b792346b313437f981f3cf2e9368355e7ce08928dd4e3162e1e7"
+}
