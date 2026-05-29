@@ -1,0 +1,40 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT id AS \"id!\", board_id AS \"board_id!\", name AS \"name!\", position AS \"position!\"\n        FROM lists WHERE id = $1\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id!",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "board_id!",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "name!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "position!",
+        "type_info": "Float8"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "95b45f34f9a87f77fb3dcee3ba5110cf3308a508687ff8980619e14aa4727580"
+}

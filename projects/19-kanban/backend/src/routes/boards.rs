@@ -31,14 +31,8 @@ pub fn router() -> Router<AppState> {
         .route("/{slug}", get(read_by_slug))
         .route("/{id}/rename", axum::routing::patch(rename))
         .route("/{id}", axum::routing::delete(remove))
-        .route(
-            "/{id}/memberships",
-            get(list_members).post(upsert_member),
-        )
-        .route(
-            "/{id}/memberships/{user_id}",
-            delete(remove_member),
-        )
+        .route("/{id}/memberships", get(list_members).post(upsert_member))
+        .route("/{id}/memberships/{user_id}", delete(remove_member))
         .route("/{id}/lists", axum::routing::post(create_list))
 }
 
@@ -425,10 +419,12 @@ async fn create_list(
     let position = match input.position {
         Some(p) if p.is_finite() => p,
         _ => {
-            let max: Option<f64> =
-                sqlx::query_scalar!("SELECT MAX(position) FROM lists WHERE board_id = $1", board_id)
-                    .fetch_one(&s.pool)
-                    .await?;
+            let max: Option<f64> = sqlx::query_scalar!(
+                "SELECT MAX(position) FROM lists WHERE board_id = $1",
+                board_id
+            )
+            .fetch_one(&s.pool)
+            .await?;
             max.unwrap_or(0.0) + 1024.0
         }
     };

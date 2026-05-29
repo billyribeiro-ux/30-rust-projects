@@ -4,12 +4,12 @@
 //! - `DELETE /api/lists/{id}`         — remove (cascades to cards)
 //! - `POST   /api/lists/{id}/cards`   — append a card
 
+use axum::Json;
 use axum::Router;
 use axum::extract::{Path, State};
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::routing::{patch, post};
-use axum::Json;
 use serde::Deserialize;
 use uuid::Uuid;
 
@@ -127,10 +127,12 @@ async fn create_card(
     let position = match input.position {
         Some(p) if p.is_finite() => p,
         _ => {
-            let max: Option<f64> =
-                sqlx::query_scalar!("SELECT MAX(position) FROM cards WHERE list_id = $1", list_id)
-                    .fetch_one(&s.pool)
-                    .await?;
+            let max: Option<f64> = sqlx::query_scalar!(
+                "SELECT MAX(position) FROM cards WHERE list_id = $1",
+                list_id
+            )
+            .fetch_one(&s.pool)
+            .await?;
             max.unwrap_or(0.0) + 1024.0
         }
     };

@@ -37,6 +37,7 @@ impl Role {
     }
 
     /// Editors and admins can mutate domain rows.
+    #[allow(dead_code)]
     pub fn can_write(self) -> bool {
         matches!(self, Role::Editor | Role::Admin)
     }
@@ -49,11 +50,7 @@ impl Role {
 
 /// Look up the effective role of `user_id` on `board_id`.
 /// Owner is always admin. Returns Ok(None) if the user has no access.
-pub async fn lookup_role(
-    pool: &PgPool,
-    board_id: Uuid,
-    user_id: Uuid,
-) -> AppResult<Option<Role>> {
+pub async fn lookup_role(pool: &PgPool, board_id: Uuid, user_id: Uuid) -> AppResult<Option<Role>> {
     // Single round-trip: pull owner_id + (optional) membership role.
     let row = sqlx::query!(
         r#"

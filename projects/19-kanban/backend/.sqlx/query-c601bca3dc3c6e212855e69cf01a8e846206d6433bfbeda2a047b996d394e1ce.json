@@ -1,0 +1,64 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT c.id AS \"id!\", c.list_id AS \"list_id!\", c.title AS \"title!\",\n               c.body AS \"body!\", c.position AS \"position!\", c.due_at,\n               c.created_at AS \"created_at!\", c.updated_at AS \"updated_at!\"\n        FROM cards c\n        JOIN lists l ON l.id = c.list_id\n        WHERE l.board_id = $1\n        ORDER BY c.position, c.id\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id!",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "list_id!",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "title!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "body!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "position!",
+        "type_info": "Float8"
+      },
+      {
+        "ordinal": 5,
+        "name": "due_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 6,
+        "name": "created_at!",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 7,
+        "name": "updated_at!",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false
+    ]
+  },
+  "hash": "c601bca3dc3c6e212855e69cf01a8e846206d6433bfbeda2a047b996d394e1ce"
+}

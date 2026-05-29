@@ -6,12 +6,12 @@
 //! - `POST   /api/cards/{id}/comments` — create
 //! - `DELETE /api/cards/{id}/comments/{cid}` — delete (admin or author)
 
+use axum::Json;
 use axum::Router;
 use axum::extract::{Path, State};
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::routing::{get, patch};
-use axum::Json;
 use chrono::{DateTime, Utc};
 use serde::Deserialize;
 use uuid::Uuid;
@@ -68,9 +68,13 @@ async fn update(
         if target_board != board_id {
             return Err(AppError::Forbidden);
         }
-        sqlx::query!("UPDATE cards SET list_id = $1 WHERE id = $2", target_list, id)
-            .execute(&s.pool)
-            .await?;
+        sqlx::query!(
+            "UPDATE cards SET list_id = $1 WHERE id = $2",
+            target_list,
+            id
+        )
+        .execute(&s.pool)
+        .await?;
     }
 
     if let Some(title) = input.title.as_ref() {

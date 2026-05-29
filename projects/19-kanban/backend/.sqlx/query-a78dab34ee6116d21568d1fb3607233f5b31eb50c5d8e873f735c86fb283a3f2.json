@@ -1,0 +1,58 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT c.id AS \"id!\", c.card_id AS \"card_id!\", c.author_id AS \"author_id!\",\n               u.email AS \"author_email!\", u.name AS \"author_name!\",\n               c.body AS \"body!\", c.created_at AS \"created_at!\"\n        FROM comments c\n        JOIN users u ON u.id = c.author_id\n        WHERE c.id = $1\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id!",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "card_id!",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "author_id!",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "author_email!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "author_name!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "body!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "created_at!",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "a78dab34ee6116d21568d1fb3607233f5b31eb50c5d8e873f735c86fb283a3f2"
+}
