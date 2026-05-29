@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE enrollments SET refunded_at = now()\n         WHERE course_id = $1 AND student_user_id = $2",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "16efb9ae15d0d6cf7674e9e49e7c2be03b7891da9ddb38a3a3c0c5ee317a3332"
+}

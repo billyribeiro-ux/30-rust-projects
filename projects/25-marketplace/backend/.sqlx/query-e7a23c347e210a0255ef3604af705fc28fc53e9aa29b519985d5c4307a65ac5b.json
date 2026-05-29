@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO instructors (user_id) VALUES ($1)\n         ON CONFLICT (user_id) DO UPDATE SET user_id = EXCLUDED.user_id\n         RETURNING stripe_account_id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "stripe_account_id",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      true
+    ]
+  },
+  "hash": "e7a23c347e210a0255ef3604af705fc28fc53e9aa29b519985d5c4307a65ac5b"
+}

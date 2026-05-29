@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO enrollments (course_id, student_user_id, stripe_payment_intent_id)\n           VALUES ($1, $2, $3)\n           ON CONFLICT (course_id, student_user_id) DO NOTHING",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "fc35a41dae764afb7f8f5875e6c3be4d9ca8c517b9b54e8e86c7dcb7fc10848c"
+}

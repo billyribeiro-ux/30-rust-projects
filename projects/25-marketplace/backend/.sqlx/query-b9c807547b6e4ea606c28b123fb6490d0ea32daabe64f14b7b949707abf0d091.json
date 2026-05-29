@@ -1,0 +1,52 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT c.id, c.title, c.price_cents, c.currency,\n                  i.stripe_account_id, i.payouts_enabled\n           FROM courses c JOIN instructors i ON i.user_id = c.instructor_id\n           WHERE c.slug = $1 AND c.status = 'published'",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "title",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "price_cents",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 3,
+        "name": "currency",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "stripe_account_id",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "payouts_enabled",
+        "type_info": "Bool"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      false
+    ]
+  },
+  "hash": "b9c807547b6e4ea606c28b123fb6490d0ea32daabe64f14b7b949707abf0d091"
+}

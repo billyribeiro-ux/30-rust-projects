@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE instructors SET stripe_account_id = $2, updated_at = now()\n                 WHERE user_id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "25b0653a8c18a9a70e4971f7f58ff27bfe10ff9d38c17eb49fd85b9338ea54be"
+}

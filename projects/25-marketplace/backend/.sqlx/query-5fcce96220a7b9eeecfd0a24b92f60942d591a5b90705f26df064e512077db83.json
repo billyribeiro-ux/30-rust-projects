@@ -1,0 +1,20 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE lessons l\n           SET title = COALESCE($3, l.title),\n               position = COALESCE($4, l.position),\n               duration_seconds = COALESCE($5, l.duration_seconds),\n               hls_manifest = COALESCE($6, l.hls_manifest)\n           FROM courses c\n           WHERE l.id = $2 AND c.id = l.course_id AND c.slug = $1\n             AND c.instructor_id = $7",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Uuid",
+        "Text",
+        "Int4",
+        "Int4",
+        "Text",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "5fcce96220a7b9eeecfd0a24b92f60942d591a5b90705f26df064e512077db83"
+}

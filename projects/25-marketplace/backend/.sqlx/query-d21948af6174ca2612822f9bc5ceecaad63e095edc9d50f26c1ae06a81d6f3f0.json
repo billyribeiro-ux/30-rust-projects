@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE courses SET status = 'published', updated_at = now()\n         WHERE slug = $1 AND instructor_id = $2",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "d21948af6174ca2612822f9bc5ceecaad63e095edc9d50f26c1ae06a81d6f3f0"
+}
