@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO webauthn_states (id, user_id, state, kind, expires_at)\n           VALUES ($1, $2, $3, 'authenticate', $4)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Jsonb",
+        "Timestamptz"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "8c4957282a44b8ca03b9d81ea801cd0a8f96936750638f4785d92a8f8452eb75"
+}

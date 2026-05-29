@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO usage_events (api_key_id, units) VALUES ($1, 1)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "5cf2abcb8e8fc27e906d78489b410cefc52b9cb7d66a10e542007204a12e99b1"
+}

@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT COUNT(*) AS \"n!\" FROM usage_events\n           WHERE api_key_id = $1 AND ts > now() - INTERVAL '1 minute'",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "n!",
+        "type_info": "Int8"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "bf9aeaf5ba9c640d4cbba27fbebd2ce40045f98bd8cedd25a37b25d470ce88da"
+}
