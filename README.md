@@ -79,27 +79,27 @@ Tier 2 — Postgres + Auth (11–18):
 - [x] 12 — Job Application Tracker (+ bcrypt legacy-migration lesson)
 - [x] 13 — Real-time Chat Rooms (+ first WebSockets)
 - [x] 14 — Calendar & Scheduler
-- [ ] 15 — File Vault with Chunked Uploads
-- [ ] 16 — Digital Product Storefront (**Stripe Checkout #1**)
+- [x] **15 — File Vault with Chunked Uploads** — tus-style resumable protocol, SHA-256 content-addressed dedup, `object_store` (local + S3), EXIF strip, folder tree UI.
+- [x] **16 — Digital Product Storefront (Stripe Checkout #1)** — hand-rolled webhook HMAC-SHA256 verify with replay window, `stripe_events` idempotency, HMAC-signed 24h download URLs, refunds, `wiremock`'d Stripe in CI.
 - [x] 17 — URL Shortener + Analytics (+ Redis, + 2FA)
 - [x] 18 — Polls & Surveys with Live Results
 
 Tier 3 — Animation, payments, scale (19–24):
 
-- [ ] 19 — Kanban Issue Tracker (GSAP #1)
-- [ ] 20 — Geo-aware Restaurant Finder (+ OAuth)
-- [ ] 21 — Newsletter Platform (**Stripe Subscriptions**)
-- [ ] 22 — Background Jobs Dashboard
-- [ ] 23 — Multi-tenant Help Desk (+ Magic Links + RLS)
-- [ ] 24 — Hybrid Search Knowledge Base
+- [x] **19 — Kanban Issue Tracker (GSAP #1)** — optimistic drag-drop with rollback, `animate:flip`, lazy GSAP drop physics, lexorank positions, RBAC at the route extractor.
+- [x] **20 — Geo-aware Restaurant Finder (+ OAuth)** — PostGIS `ST_DWithin`, hand-rolled OAuth 2.0 + PKCE for Google + GitHub (state/verifier/nonce), `test_only` session-injection route, Restaurant JSON-LD.
+- [x] **21 — Newsletter Platform (Stripe Subscriptions #2)** — local mirror of Stripe state, dunning 14-day grace + auto-downgrade, magic-link auth for subscribers, RSS feed, 402 paywall with `isAccessibleForFree` JSON-LD.
+- [x] **22 — Background Jobs Dashboard** — Postgres `FOR UPDATE SKIP LOCKED` queue, exponential backoff + jitter (proptested), dead-letter on max attempts, SSE live job stream + `invalidateAll()`.
+- [x] **23 — Multi-tenant Help Desk (+ Magic Links + RLS)** — Postgres RLS via `SET LOCAL app.tenant_id`, audit log by trigger (app cannot skip), permission matrix tests, magic-link customer auth.
+- [x] **24 — Hybrid Search Knowledge Base** — weighted `tsvector` GIN (title A > summary B > body C) + trigger, `pg_trgm` typo fallback, optional Meili via Reciprocal Rank Fusion, `ts_headline` snippets with `<mark>`, sitemap.xml + Article/FAQ JSON-LD.
 
 Tier 4 — Distinguished work (25–30):
 
-- [ ] 25 — Course Marketplace (**Stripe Connect**)
-- [ ] 26 — Live Coding Interview Platform (+ SAML/SSO)
-- [ ] 27 — Realtime Analytics Dashboard (GSAP #2)
-- [ ] 28 — AI Inference API (**Stripe Metered Billing** + WebAuthn)
-- [ ] 29 — Cinematic Portfolio + CMS (GSAP #3)
-- [ ] 30 — SaaS Capstone — Multi-tenant Project Management
+- [x] **25 — Course Marketplace (Stripe Connect #3)** — Express account-link onboarding, destination charges with `application_fee_amount` + `transfer_data`, refunds with `reverse_transfer + refund_application_fee`, 14-day refund window enforced server-side.
+- [x] **26 — Live Coding Interview Platform (+ SAML/SSO)** — Axum WebSocket + `broadcast` hub for shared editor, `CodeRunner` trait (MockRunner ships, DockerRunner doc'd), SAML SP metadata endpoint, two-client WebSocket race test.
+- [x] **27 — Realtime Analytics Dashboard (GSAP #2)** — `/v1/ingest` → Postgres aggregate → SSE broadcast loop, GSAP number-roll with lazy import + reduced-motion guard, DuckDB upgrade path documented.
+- [x] **28 — AI Inference API (Stripe Metered Billing #4 + WebAuthn)** — `webauthn-rs` passkey enrol/login, API keys SHA-256-hashed at rest with `sk_live_` prefix, per-key RPM gate, `usage_events` partial index for Stripe Meter Events reconciler.
+- [x] **29 — Cinematic Portfolio + Headless CMS (GSAP #3)** — `{@attach}` reveal-on-scroll, lazy GSAP, View Transitions API one-liner, MDX-ish content pipeline (server-rendered Markdown), CreativeWork JSON-LD + hreflang.
+- [x] **30 — SaaS Capstone — Multi-tenant Project Management** — tenants × memberships × projects × tasks, Postgres RLS via `SET LOCAL`, audit log by trigger, Stripe Subscriptions groundwork, cross-tenant isolation integration test. The integration of every primitive in this curriculum.
 
 See [`CURRICULUM.md`](./CURRICULUM.md) for the full project specs and [`PATTERNS.md`](./PATTERNS.md) for cross-project conventions.
