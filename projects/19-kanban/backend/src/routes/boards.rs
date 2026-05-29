@@ -26,11 +26,14 @@ use crate::error::{AppError, AppResult, FieldError};
 use crate::state::AppState;
 
 pub fn router() -> Router<AppState> {
+    // Axum 0.8 requires a single param name per position. `/{id}` is
+    // overloaded: `GET` accepts a SLUG (the public addressing scheme the
+    // frontend uses); `DELETE` accepts a UUID. Each handler parses the
+    // segment in the shape it needs.
     Router::new()
         .route("/", get(list).post(create))
-        .route("/{slug}", get(read_by_slug))
+        .route("/{id}", get(read_by_slug).delete(remove))
         .route("/{id}/rename", axum::routing::patch(rename))
-        .route("/{id}", axum::routing::delete(remove))
         .route("/{id}/memberships", get(list_members).post(upsert_member))
         .route("/{id}/memberships/{user_id}", delete(remove_member))
         .route("/{id}/lists", axum::routing::post(create_list))
