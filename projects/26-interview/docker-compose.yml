@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: interview
+      POSTGRES_PASSWORD: interview_dev_password
+      POSTGRES_DB: interview
+    ports:
+      - "5447:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U interview -d interview"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+volumes:
+  postgres_data: {}
