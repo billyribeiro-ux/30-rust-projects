@@ -1,0 +1,46 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT fr.friend_id, u.email AS friend_email,\n               fr.place_id, p.name AS place_name, fr.created_at\n        FROM friend_recs fr\n        JOIN users  u ON u.id = fr.friend_id\n        JOIN places p ON p.id = fr.place_id\n        WHERE fr.user_id = $1\n        ORDER BY fr.created_at DESC\n        LIMIT 200\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "friend_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "friend_email",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "place_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "place_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "57c4247cd2859bb9519058ed71210aeb8dc9f23688ba44f017a97e99107aa6c5"
+}
