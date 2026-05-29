@@ -1,0 +1,46 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT\n            id,\n            slug,\n            title,\n            ts_headline(\n                'english',\n                COALESCE(summary, body_md),\n                plainto_tsquery('english', $1),\n                'MaxFragments=2, MaxWords=18, MinWords=6, StartSel=<mark>, StopSel=</mark>'\n            ) AS \"snippet!\",\n            ts_rank_cd(tsv, plainto_tsquery('english', $1))::float8 AS \"rank_score!: f64\"\n        FROM articles\n        WHERE published_at IS NOT NULL\n          AND tsv @@ plainto_tsquery('english', $1)\n        ORDER BY ts_rank_cd(tsv, plainto_tsquery('english', $1)) DESC\n        LIMIT 50\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "slug",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "title",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "snippet!",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "rank_score!: f64",
+        "type_info": "Float8"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      null,
+      null
+    ]
+  },
+  "hash": "2410759f5860cc39c79217b3ba1b9a2d852170a248c6f847049b6529fac40ca9"
+}

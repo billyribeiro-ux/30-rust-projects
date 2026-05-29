@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT q, a FROM faqs WHERE article_id = $1 ORDER BY position",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "q",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 1,
+        "name": "a",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false
+    ]
+  },
+  "hash": "1afeee65f8705220d458ccde0184895b1dac8c7a70c3e6d283c18cae9f38f84c"
+}

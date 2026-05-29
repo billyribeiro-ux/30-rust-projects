@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: kb
+      POSTGRES_PASSWORD: kb_dev_password
+      POSTGRES_DB: kb
+    ports:
+      - "5445:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kb -d kb"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+  # OPTIONAL — MeiliSearch for semantic + typo-tolerant fallback. The
+  # backend works without it (graceful degradation to FTS-only); see LESSON.
+  meili:
+    image: getmeili/meilisearch:v1.11
+    environment:
+      MEILI_MASTER_KEY: dev_master_key
+      MEILI_NO_ANALYTICS: "true"
+    ports:
+      - "7700:7700"
+    volumes:
+      - meili_data:/meili_data
+
+volumes:
+  postgres_data: {}
+  meili_data: {}
