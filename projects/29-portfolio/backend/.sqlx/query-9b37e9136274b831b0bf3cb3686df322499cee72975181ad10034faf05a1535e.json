@@ -1,0 +1,19 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE posts\n           SET title = COALESCE($2, title),\n               summary = COALESCE($3, summary),\n               hero_image_url = COALESCE($4, hero_image_url),\n               body_mdx = $5,\n               body_html = $6,\n               updated_at = now()\n           WHERE id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text",
+        "Text",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "9b37e9136274b831b0bf3cb3686df322499cee72975181ad10034faf05a1535e"
+}
