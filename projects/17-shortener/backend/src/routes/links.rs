@@ -12,8 +12,7 @@ use axum::{Json, Router};
 use base64::Engine;
 use base64::engine::general_purpose::URL_SAFE_NO_PAD;
 use chrono::{DateTime, Utc};
-use rand::RngCore;
-use rand::rngs::OsRng;
+use rand::RngExt;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
 use std::sync::OnceLock;
@@ -81,7 +80,7 @@ pub struct LinkRow {
 
 fn random_slug() -> String {
     let mut bytes = [0u8; 6]; // 6 bytes → 8 chars b64url, trim to 7
-    OsRng.fill_bytes(&mut bytes);
+    rand::rng().fill(&mut bytes);
     let s = URL_SAFE_NO_PAD.encode(bytes);
     s.chars().take(7).collect()
 }

@@ -32,8 +32,7 @@ use chrono::{DateTime, Utc};
 use futures::stream::{Stream, StreamExt};
 use qrcode::QrCode;
 use qrcode::render::svg;
-use rand::RngCore;
-use rand::rngs::OsRng;
+use rand::RngExt;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use sqlx::PgPool;
@@ -566,7 +565,7 @@ fn derive_voter_key(slug: &str, ip: &str, cookie: &str) -> String {
 
 fn generate_voter_token() -> String {
     let mut bytes = [0u8; 16];
-    OsRng.fill_bytes(&mut bytes);
+    rand::rng().fill(&mut bytes);
     URL_SAFE_NO_PAD.encode(bytes)
 }
 

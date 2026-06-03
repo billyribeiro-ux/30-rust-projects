@@ -6,7 +6,7 @@
 //! `v1=` values so a secret rotation has a window where both work.
 //! 5-minute replay window — anything older is dropped.
 
-use hmac::{Hmac, Mac};
+use hmac::{Hmac, KeyInit, Mac};
 use sha2::Sha256;
 
 const REPLAY_TOLERANCE_SECS: i64 = 300;

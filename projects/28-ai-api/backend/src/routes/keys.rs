@@ -10,8 +10,7 @@ use axum::routing::{get, post};
 use base64::Engine;
 use base64::engine::general_purpose::URL_SAFE_NO_PAD;
 use chrono::{DateTime, Utc};
-use rand::RngCore;
-use rand::rngs::OsRng;
+use rand::RngExt;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use uuid::Uuid;
@@ -86,7 +85,7 @@ async fn create(
     }
     // 32 random bytes → base64url-no-pad → 43 chars.
     let mut bytes = [0u8; 32];
-    OsRng.fill_bytes(&mut bytes);
+    rand::rng().fill(&mut bytes);
     let secret_body = URL_SAFE_NO_PAD.encode(bytes);
     let secret = format!("sk_live_{secret_body}");
     let prefix = secret_body.chars().take(8).collect::<String>();

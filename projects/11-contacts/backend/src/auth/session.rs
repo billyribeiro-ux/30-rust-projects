@@ -23,8 +23,7 @@ use axum_extra::extract::cookie::{Cookie, CookieJar, SameSite};
 use base64::Engine;
 use base64::engine::general_purpose::URL_SAFE_NO_PAD;
 use chrono::{Duration, Utc};
-use rand::RngCore;
-use rand::rngs::OsRng;
+use rand::RngExt;
 use sqlx::PgPool;
 use uuid::Uuid;
 
@@ -44,12 +43,12 @@ pub struct AuthUser {
     pub session_id: Uuid,
 }
 
-/// Generate a fresh opaque session token. 32 bytes of OS randomness →
-/// base64url (43 chars). Match `Cookie` accepts. The HASH is stored;
-/// the RAW value goes in the cookie.
+/// Generate a fresh opaque session token. 32 bytes of cryptographic
+/// randomness → base64url (43 chars). Match `Cookie` accepts. The HASH is
+/// stored; the RAW value goes in the cookie.
 pub fn generate_token() -> String {
     let mut bytes = [0u8; 32];
-    OsRng.fill_bytes(&mut bytes);
+    rand::rng().fill(&mut bytes);
     URL_SAFE_NO_PAD.encode(bytes)
 }
 

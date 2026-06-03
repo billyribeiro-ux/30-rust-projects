@@ -6,7 +6,7 @@
 //!
 //! The math is in one place so it can be proptested in isolation.
 
-use rand::Rng;
+use rand::RngExt;
 
 #[derive(Debug, Clone, Copy)]
 pub struct Backoff {
@@ -30,8 +30,8 @@ impl Backoff {
     pub fn delay_secs(&self, attempt: u32) -> f64 {
         let base = self.base_secs * self.factor.powi((attempt.max(1) - 1) as i32);
         let capped = base.min(self.max_secs);
-        let mut rng = rand::thread_rng();
-        let jitter_factor = 1.0 + rng.gen_range(-0.25..=0.25);
+        let mut rng = rand::rng();
+        let jitter_factor = 1.0 + rng.random_range(-0.25..=0.25);
         (capped * jitter_factor).max(1.0)
     }
 }
