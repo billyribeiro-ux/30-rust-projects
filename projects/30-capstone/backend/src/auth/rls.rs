@@ -7,6 +7,7 @@
 //! of leaking a previous request's tenant context onto the connection
 //! pool.
 
+use sqlx::AssertSqlSafe;
 use sqlx::{Postgres, Transaction};
 use uuid::Uuid;
 
@@ -19,11 +20,11 @@ pub async fn enter_tenant<'c>(
 ) -> AppResult<()> {
     // UUIDs are safe to interpolate (no quote/escape characters), but we
     // keep the formatter defensive anyway by validating via the Uuid type.
-    sqlx::query(&format!("SET LOCAL app.tenant_id = '{tenant_id}'"))
+    sqlx::query(AssertSqlSafe(format!("SET LOCAL app.tenant_id = '{tenant_id}'")))
         .execute(&mut **tx)
         .await?;
     if let Some(uid) = user_id {
-        sqlx::query(&format!("SET LOCAL app.user_id = '{uid}'"))
+        sqlx::query(AssertSqlSafe(format!("SET LOCAL app.user_id = '{uid}'")))
             .execute(&mut **tx)
             .await?;
     }

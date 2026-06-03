@@ -16,9 +16,8 @@
 
 use base64::Engine;
 use base64::engine::general_purpose::URL_SAFE_NO_PAD;
-use hmac::{Hmac, Mac};
-use rand::RngCore;
-use rand::rngs::OsRng;
+use hmac::{Hmac, KeyInit, Mac};
+use rand::RngExt;
 use sha2::Sha256;
 use subtle::ConstantTimeEq;
 
@@ -27,7 +26,7 @@ type HmacSha256 = Hmac<Sha256>;
 /// Generate a 32-byte random nonce, base64url-encoded (no padding).
 pub fn random_nonce() -> String {
     let mut bytes = [0u8; 32];
-    OsRng.fill_bytes(&mut bytes);
+    rand::rng().fill(&mut bytes);
     URL_SAFE_NO_PAD.encode(bytes)
 }
 

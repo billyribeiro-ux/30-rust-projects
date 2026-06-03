@@ -19,7 +19,7 @@ use argon2::{
     Algorithm, Argon2, Params, PasswordHash, PasswordHasher, PasswordVerifier, Version,
     password_hash::SaltString,
 };
-use rand::rngs::OsRng;
+use argon2::password_hash::rand_core::OsRng;
 
 use crate::error::{AppError, AppResult};
 

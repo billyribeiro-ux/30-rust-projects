@@ -63,12 +63,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     });
     let flaky_job: HandlerFn = Arc::new(|payload| {
         Box::pin(async move {
-            use rand::Rng;
+            use rand::RngExt;
             let fail_pct = payload
                 .get("fail_pct")
                 .and_then(|v| v.as_u64())
                 .unwrap_or(40);
-            if rand::thread_rng().gen_range(0..100) < fail_pct {
+            if rand::rng().random_range(0..100) < fail_pct {
                 return Err(jobs_backend::error::AppError::Internal(
                     "flaky job rolled a failure".into(),
                 ));

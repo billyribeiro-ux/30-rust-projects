@@ -30,8 +30,7 @@ use axum::{Json, Router};
 use axum_extra::extract::cookie::CookieJar;
 use base64::Engine;
 use base64::engine::general_purpose::STANDARD;
-use rand::RngCore;
-use rand::rngs::OsRng;
+use rand::RngExt;
 use serde::{Deserialize, Serialize};
 use totp_rs::{Algorithm, Secret, TOTP};
 
@@ -141,7 +140,7 @@ async fn verify_setup(
     let mut hashes: Vec<String> = Vec::with_capacity(BACKUP_COUNT);
     for _ in 0..BACKUP_COUNT {
         let mut buf = [0u8; 6];
-        OsRng.fill_bytes(&mut buf);
+        rand::rng().fill(&mut buf);
         // Hex-encode for human-typeable codes: 12 chars, all 0-9/a-f.
         let code = hex::encode(buf);
         let h = hash::hash_password(&code)?;

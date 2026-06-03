@@ -12,8 +12,7 @@
 
 use base64::Engine;
 use base64::engine::general_purpose::URL_SAFE_NO_PAD;
-use rand::RngCore;
-use rand::rngs::OsRng;
+use rand::RngExt;
 use sha2::{Digest, Sha256};
 
 /// 32 random bytes → 43-char base64url string. Used for `state`, `nonce`,
@@ -21,7 +20,7 @@ use sha2::{Digest, Sha256};
 /// allows up to 96 for the verifier.
 pub fn random_token() -> String {
     let mut bytes = [0u8; 32];
-    OsRng.fill_bytes(&mut bytes);
+    rand::rng().fill(&mut bytes);
     URL_SAFE_NO_PAD.encode(bytes)
 }
 
