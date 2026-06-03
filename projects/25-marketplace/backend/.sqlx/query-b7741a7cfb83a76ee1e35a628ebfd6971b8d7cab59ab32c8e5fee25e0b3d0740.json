@@ -6,27 +6,57 @@
       {
         "ordinal": 0,
         "name": "user_id",
-        "type_info": "Uuid"
+        "type_info": "Uuid",
+        "origin": {
+          "Table": {
+            "table": "instructors",
+            "name": "user_id"
+          }
+        }
       },
       {
         "ordinal": 1,
         "name": "stripe_account_id",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "instructors",
+            "name": "stripe_account_id"
+          }
+        }
       },
       {
         "ordinal": 2,
         "name": "payouts_enabled",
-        "type_info": "Bool"
+        "type_info": "Bool",
+        "origin": {
+          "Table": {
+            "table": "instructors",
+            "name": "payouts_enabled"
+          }
+        }
       },
       {
         "ordinal": 3,
         "name": "details_submitted",
-        "type_info": "Bool"
+        "type_info": "Bool",
+        "origin": {
+          "Table": {
+            "table": "instructors",
+            "name": "details_submitted"
+          }
+        }
       },
       {
         "ordinal": 4,
         "name": "created_at",
-        "type_info": "Timestamptz"
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "instructors",
+            "name": "created_at"
+          }
+        }
       }
     ],
     "parameters": {

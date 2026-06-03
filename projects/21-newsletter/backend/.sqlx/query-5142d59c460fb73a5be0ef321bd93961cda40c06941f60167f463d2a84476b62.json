@@ -6,32 +6,68 @@
       {
         "ordinal": 0,
         "name": "slug",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "posts",
+            "name": "slug"
+          }
+        }
       },
       {
         "ordinal": 1,
         "name": "title",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "posts",
+            "name": "title"
+          }
+        }
       },
       {
         "ordinal": 2,
         "name": "summary",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "posts",
+            "name": "summary"
+          }
+        }
       },
       {
         "ordinal": 3,
         "name": "body_html",
-        "type_info": "Text"
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "posts",
+            "name": "body_html"
+          }
+        }
       },
       {
         "ordinal": 4,
         "name": "is_gated",
-        "type_info": "Bool"
+        "type_info": "Bool",
+        "origin": {
+          "Table": {
+            "table": "posts",
+            "name": "is_gated"
+          }
+        }
       },
       {
         "ordinal": 5,
         "name": "published_at",
-        "type_info": "Timestamptz"
+        "type_info": "Timestamptz",
+        "origin": {
+          "Table": {
+            "table": "posts",
+            "name": "published_at"
+          }
+        }
       }
     ],
     "parameters": {
