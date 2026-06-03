@@ -7,7 +7,7 @@
 //! of leaking a previous request's tenant context onto the connection
 //! pool.
 
-use sqlx::query::AssertSqlSafe;
+use sqlx::AssertSqlSafe;
 use sqlx::{Postgres, Transaction};
 use uuid::Uuid;
 

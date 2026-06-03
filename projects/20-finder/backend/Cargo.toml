@@ -39,12 +39,12 @@ time = "0.3"
 # token exchange. We intentionally do NOT pull `openidconnect` here;
 # the lesson is the protocol.
 url = "2"
-reqwest = { version = "0.13", features = ["json", "rustls"], default-features = false }
+reqwest = { version = "0.13", features = ["json", "form", "rustls"], default-features = false }
 async-trait = "0.1"
 
 [dev-dependencies]
 tokio = { version = "1", features = ["full"] }
-reqwest = { version = "0.13", features = ["json", "rustls"], default-features = false }
+reqwest = { version = "0.13", features = ["json", "form", "rustls"], default-features = false }
 wiremock = "0.6"
 
 [profile.dev]

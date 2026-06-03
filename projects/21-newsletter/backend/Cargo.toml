@@ -36,7 +36,7 @@ subtle = "2.6"
 time = "0.3"
 
 # Stripe (hand-rolled HTTP client, webhook signature verify)
-reqwest = { version = "0.13", features = ["json", "rustls"], default-features = false }
+reqwest = { version = "0.13", features = ["json", "form", "rustls"], default-features = false }
 hmac = "0.13"
 hex = "0.4"
 url = "2"
@@ -50,7 +50,7 @@ lettre = { version = "0.11", default-features = false, features = ["tokio1-rustl
 
 [dev-dependencies]
 tokio = { version = "1", features = ["full"] }
-reqwest = { version = "0.13", features = ["json", "rustls"], default-features = false }
+reqwest = { version = "0.13", features = ["json", "form", "rustls"], default-features = false }
 wiremock = "0.6"
 
 [profile.dev]
